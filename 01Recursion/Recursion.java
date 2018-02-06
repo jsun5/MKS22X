@@ -34,18 +34,18 @@ public class Recursion{
         if (n == 0){
             return 0;
         }
-        return sqrter(n, n / 2);
+        return sqrter(n, 1.0);
     }
     
     public double sqrter(double n, double guess){
-        if ( ((guess * guess - n) / n) < .000000001){
+        if ( (Math.abs((guess * guess - n) / n)) < .000000000000001){
             return guess;
         }
         //System.out.println(guess);
         return sqrter(n, ( n / guess + guess) / 2);
     }
         
-    public static void main(String[]args){
+/*    public static void main(String[]args){
         Recursion test = new Recursion();
         
 //        System.out.println(test.fact(-1));
@@ -64,16 +64,18 @@ public class Recursion{
         System.out.println(test.fib(6));
         System.out.println(test.fib(7));
         System.out.println(test.fib(8));
-        System.out.println(test.fib(9));
+        System.out.println(test.fib(30));
         
 //        System.out.println(test.sqrt(-1));
         System.out.println(test.sqrt(0));
+        System.out.println(test.sqrt(0.16));
         System.out.println(test.sqrt(1));
         System.out.println(test.sqrt(2));
         System.out.println(test.sqrt(3));
         System.out.println(test.sqrt(4));
+        System.out.println(test.sqrt(16));
         System.out.println(test.sqrt(256));
         System.out.println(test.sqrt(260));
         
-    }
+    } */
 }
