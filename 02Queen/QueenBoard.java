@@ -73,6 +73,24 @@ public class QueenBoard{
         }
         return false;
     }
+    
+    public int countSolutions(){
+       return counter(0,0);
+    }
+   
+    public int counter(int c, int total){
+        if (c == board[0].length){
+            return 1;
+        }
+        for (int r = 0; r < board.length; r++){
+            if (addQueen(r,c)){
+                total += counter(c + 1, total + 1);
+                removeQueen(r,c);
+            }
+        }
+        return total;
+    }
+
 
     public static void main(String[]args){
         QueenBoard test = new QueenBoard(8);
