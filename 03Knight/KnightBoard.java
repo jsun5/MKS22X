@@ -1,5 +1,13 @@
 public class KnightBoard{
     private int[][] board;
+    private int[][] moveSet = {{-2,1}
+			       {-2,-1}
+			       {-1,2}
+			       {-1,-2}
+	                       {1,2}
+			       {1,-2}
+			       {2,1}
+			       {2,-1}};
 
     public KnightBoard(int startingRows, int startingCols){
 	board = new int[startingRows][startingCols];
@@ -16,17 +24,7 @@ public class KnightBoard{
 	int[] validMoves = new int[16];
     }
 
-    private int[]  validate(int row, int col){
-	int[] validMoves = new int[16];
-	if (row - 3, col + 1){}
-	if (row - 1, col + 3){}
-	if (row + 1, col + 3){}
-	if (row + 3, col + 1){}
-      	if (row + 3, col - 1){}
-	if (row + 1, col - 3){}
-	if (row - 1, col - 3){}
-	if (row - 3, col - 1){}
-    }
-
-    public int countSolutions(){}
-}
+    private boolean  validate(int row, int col){
+	for (int i = 0; i < moveSet.length; i++){
+	    if (board[row + moveSet[i][0]] [col + moveSet[i][1]] == 0){
+		
