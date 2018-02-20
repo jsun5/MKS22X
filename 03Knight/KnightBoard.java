@@ -73,9 +73,9 @@ public class KnightBoard{
     }
 
     public static void main( String[]args){
-	KnightBoard test = new KnightBoard(5,4);
+	KnightBoard test = new KnightBoard(5,6);
       	System.out.println(test);
-	System.out.println(test.solve(3,2));
+	System.out.println(test.solve(1,1));
 	System.out.println(test);
     }
 }
