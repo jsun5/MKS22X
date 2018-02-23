@@ -144,13 +144,63 @@ public class KnightBoard{
         return total;
     }
 
+    public boolean solveFast(int startR, int startC){
+        for (int r = 0; r < board.length; r ++){
+            for (int c = 0; c < board[0].length; c ++){
+                if (board[r][c] != 0){
+                    throw new IllegalStateException("start w zeros!");
+                }
+            }
+        }
+        
+        if (startR < 0 || startC < 0){
+            throw new IllegalArgumentException("no negative lengths either");
+        }
+        return faster(startR, startC, 1);
+    }
+    
+    private boolean faster(int row, int col, int level){
+        if (level == board.length * board[0].length){
+            board[row][col] = level;
+            return true;
+        }
+        int minRow = 100;
+        int minCol = 100;
+        for (int i = 0; i < 8; i++){
+            int min = 8;
+            int nextRow = row + moveSet[0][i];
+            int nextCol = col + moveSet[1][i];
+            if (isValid(nextRow, nextCol) && board[nextRow] [nextCol] == 0){
+               if (moveBoard[nextRow][nextCol] <= min){
+                    min = moveBoard[nextRow][nextCol];
+                    minRow = nextRow;
+                    minCol = nextCol;
+                }
+                moveBoard[nextRow][nextCol] = moveBoard[nextRow][nextCol] - 1;
+            }
+        }
+        board[row] [col] = level;
+        print();
+        movePrint();
+        if( faster(minRow, minCol, level + 1)){
+            return true;
+        }
+        board[row] [col] = 0;
+        return false;
+    }
     
 
 
         
     public static void main(String[] args){
-        KnightBoard test = new KnightBoard(6,6);
+        KnightBoard test = new KnightBoard(5,5);
         System.out.println(test);
+        System.out.println(test.solve(0,0));
+                System.out.println(test);
+        test = new KnightBoard(6,6);
+                System.out.println(test);
+        System.out.println(test.solveFast(0,0));
+                System.out.println(test);
     }
 }
 
