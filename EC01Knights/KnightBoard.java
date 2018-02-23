@@ -164,45 +164,45 @@ public class KnightBoard{
             board[row][col] = level;
             return true;
         }
-        int minRow = 100;
-        int minCol = 100;
+        int min = 8;
         for (int i = 0; i < 8; i++){
-            int min = 8;
             int nextRow = row + moveSet[0][i];
             int nextCol = col + moveSet[1][i];
+                                print();
+                    movePrint();
             if (isValid(nextRow, nextCol) && board[nextRow] [nextCol] == 0){
                if (moveBoard[nextRow][nextCol] <= min){
                     min = moveBoard[nextRow][nextCol];
-                    minRow = nextRow;
-                    minCol = nextCol;
                 }
-                moveBoard[nextRow][nextCol] = moveBoard[nextRow][nextCol] - 1;
+                moveBoard[nextRow][nextCol] --;
             }
         }
-        board[row] [col] = level;
-        print();
-        movePrint();
-        if( faster(minRow, minCol, level + 1)){
-            return true;
+        for (int i = 0; i < 8; i++){
+            int nextRow = row + moveSet[0][i];
+            int nextCol = col + moveSet[1][i];
+            if (isValid(nextRow, nextCol)){
+                if (moveBoard[nextRow] [nextCol] == min){
+                    board[row] [col] = level;
+                    print();
+                    movePrint();
+                    if( faster(nextRow, nextCol, level + 1)){
+                        return true;
+                    }
+                   board[row] [col] = 0;
+                }
+            }
         }
-        board[row] [col] = 0;
         return false;
     }
-    
-
-
-        
+            
     public static void main(String[] args){
         KnightBoard test = new KnightBoard(5,5);
         System.out.println(test);
         System.out.println(test.solve(0,0));
                 System.out.println(test);
-        test = new KnightBoard(6,6);
+        test = new KnightBoard(5,5);
                 System.out.println(test);
-        System.out.println(test.solveFast(0,0));
-                System.out.println(test);
+        System.out.println(test.solveFast(1,0));
+               System.out.println(test);
     }
 }
-
-    
-
