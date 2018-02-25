@@ -170,11 +170,12 @@ public class KnightBoard{
             int nextCol = col + moveSet[1][i];
                                 print();
                     movePrint();
-            if (isValid(nextRow, nextCol) && board[nextRow] [nextCol] == 0){
-               if (moveBoard[nextRow][nextCol] <= min){
+            if (isValid(nextRow, nextCol) ){
+                moveBoard[nextRow][nextCol] --;
+                if (moveBoard[nextRow][nextCol] <= min && board[nextRow] [nextCol] == 0){
                     min = moveBoard[nextRow][nextCol];
                 }
-                moveBoard[nextRow][nextCol] --;
+                
             }
         }
         for (int i = 0; i < 8; i++){
@@ -202,7 +203,7 @@ public class KnightBoard{
                 System.out.println(test);
         test = new KnightBoard(5,5);
                 System.out.println(test);
-        System.out.println(test.solveFast(1,0));
+        System.out.println(test.solveFast(0,0));
                System.out.println(test);
     }
 }
