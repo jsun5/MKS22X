@@ -23,7 +23,7 @@ public class KnightBoard{
                 moveBoard[r][c] = count;
             }
         }
-        movePrint();
+     //   movePrint();
     }
 
     public String toString(){
@@ -160,19 +160,23 @@ public class KnightBoard{
     }
     
     private boolean faster(int row, int col, int level){
+        if (board[row][col] != 0){
+            return false;
+        }
         if (level == board.length * board[0].length){
             board[row][col] = level;
             return true;
         }
+
         int min = 8;
         for (int i = 0; i < 8; i++){
             int nextRow = row + moveSet[0][i];
             int nextCol = col + moveSet[1][i];
-                                print();
-                    movePrint();
+            //                    print();
+           //         movePrint();
             if (isValid(nextRow, nextCol) ){
                 moveBoard[nextRow][nextCol] --;
-                if (moveBoard[nextRow][nextCol] <= min && board[nextRow] [nextCol] == 0){
+                if (moveBoard[nextRow][nextCol] < min && board[nextRow] [nextCol] == 0){
                     min = moveBoard[nextRow][nextCol];
                 }
                 
@@ -184,26 +188,37 @@ public class KnightBoard{
             if (isValid(nextRow, nextCol)){
                 if (moveBoard[nextRow] [nextCol] == min){
                     board[row] [col] = level;
-                    print();
-                    movePrint();
+              //      print();
+             //       movePrint();
                     if( faster(nextRow, nextCol, level + 1)){
                         return true;
                     }
                    board[row] [col] = 0;
+                   moveBoard[nextRow][nextCol] = min;
                 }
             }
         }
         return false;
     }
+}
             
-    public static void main(String[] args){
+/*    public static void main(String[] args){
         KnightBoard test = new KnightBoard(5,5);
         System.out.println(test);
-        System.out.println(test.solve(0,0));
+        System.out.println(test.solve(4,0));
                 System.out.println(test);
         test = new KnightBoard(5,5);
                 System.out.println(test);
-        System.out.println(test.solveFast(0,0));
+        System.out.println(test.solveFast(4,0));
                System.out.println(test);
+               
+        KnightBoard test2 = new KnightBoard(51,51);
+    //    System.out.println(test2);
+      //  System.out.println(test2.solve(0,0));
+       //         System.out.println(test2);
+       // test2 = new KnightBoard(8,8);
+                        System.out.println(test2);
+        System.out.println(test2.solveFast(0,0));
+               System.out.println(test2);
     }
-}
+}*/
