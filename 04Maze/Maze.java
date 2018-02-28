@@ -6,12 +6,12 @@ public class Maze {
     private char[][] maze;
     private boolean animate;
     
-    public Maze(String filename){
-	animate = false;
+    public Maze(String filename) throws FileNotFoundException{
+	setAnimate(false);
+	ReadFile(filename);
     }
     
-    public void ReadFile (String fileName){
-        try{
+    public void ReadFile (String fileName) throws FileNotFoundException{
 
         //instead of a try/catch, you can throw the FileNotFoundException.
         File text = new File(fileName);// can be a path like: "/full/path/to/file.txt" 
@@ -20,28 +20,23 @@ public class Maze {
         Scanner inf = new Scanner(text);
 
         String ans = "";
-        int cols;
+        int cols = 0;
         int rows = 0;
         while(inf.hasNextLine()){
             String line = inf.nextLine();
             cols = line.length();
 	    rows++;
-	    ans += line + "/";
+	    ans += line;
             System.out.println(line);//hopefully you can do other things with the line
         }
 	maze = new char[rows][cols];
 	int i = 0;
 	for (int r = 0; r < rows; r ++){
 	    for (int c = 0; c < cols; c++){
-		if (ans.charAt(i) != '/'){
 		    maze[r][c] = ans.charAt(i);
-		}
 		i++;
-	
 	    }
 	}
-	}
-        catch (FileNotFoundException e){}
     }
        
     public String toString(){
@@ -113,10 +108,16 @@ public class Maze {
     }
 
 }*/
-}
+
     
   public static void main(String[]args){
+      try{
 	     Maze test = new Maze("data1.dat");
-	     maze.ReadFile("data1.dat");
+	     test.ReadFile("data1.dat");
+	     System.out.println(test);
+      }catch(FileNotFoundException e){
+	  System.out.println("File not found!");
+	      }
     }
 
+}
