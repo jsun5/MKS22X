@@ -5,7 +5,9 @@ public class Maze {
 
     private char[][] maze;
     private boolean animate;
-    
+    private int[][] moveSet = {{0,1,1,1,0,-1,-1,-1}},
+                               {1,1,0,-1,-1,-1,0,1}};
+
     public Maze(String filename) throws FileNotFoundException{
 	setAnimate(false);
 	ReadFile(filename);
@@ -69,18 +71,30 @@ public class Maze {
 
     /*        Wrapper Solve Function returns the helper function
       Note the helper function has the same name, but different parameters.
-      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.
+      Since the constructor exits when the file is not found or is missing an E or S, we can assume it exists.*/
     
       public int solve(){
+	for (int r = 0; r < maze.length; r ++){
+	    for (int c = 0; c < maze[0].length; c++){
+		if (maze[r][c] == 'S'){
+		    maze[r][c] == ' ';
+		    return solve(r,c);
+		}
+		    
+	    }
+	}
+	return 0;
+     
+	
             //find the location of the S. 
 
             //erase the S
 
             //and start solving at the location of the s.
             //return solve(???,???);
-    }
+      }
 
-    
+    /*
       Recursive Solve function:
 
       A solved maze has a path marked with '@' from S to E.
@@ -93,6 +107,7 @@ public class Maze {
         All visited spots that were not part of the solution are changed to '.'
             Note: This is not required based on the algorithm, it is just nice visually to see.
         All visited spots that are part of the solution are changed to '@'
+    */
     
     private int solve(int row, int col){ //you can add more parameters since this is private
 
@@ -104,6 +119,15 @@ public class Maze {
         }
 
         //COMPLETE SOLVE
+
+	for (int i = 0; i < 8; i++){
+	    int nextRow = row + moveSet[0][i];
+	    int nextCol = col + moveSet[1][i];
+	    if (maze[nexRow][nextCol] == ' '){
+		if(solve(nextRow,nextCol)){
+			return 1;
+		}
+	    }
         return -1; //so it compiles
     }
 
