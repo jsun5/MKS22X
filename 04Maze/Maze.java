@@ -5,9 +5,8 @@ public class Maze {
 
     private char[][] maze;
     private boolean animate;
-    private int[][] moveSet = {{0,1,1,1,0,-1,-1,-1}},
-                               {1,1,0,-1,-1,-1,0,1}};
-
+    private int[][] moveSet = {{0,1,0,-1},
+                               {1,0,-1,0}};
     public Maze(String filename) throws FileNotFoundException{
 	setAnimate(false);
 	ReadFile(filename);
@@ -33,12 +32,23 @@ public class Maze {
         }
 	maze = new char[rows][cols];
 	int i = 0;
+    int numS = 0;
+    int numE = 0;
 	for (int r = 0; r < rows; r ++){
 	    for (int c = 0; c < cols; c++){
 		    maze[r][c] = ans.charAt(i);
+            if (ans.charAt(i) == 'S'){
+                numS++;
+            }
+            if (ans.charAt(i) == 'E'){
+                numE++;
+            }
 		i++;
 	    }
 	}
+    if (numS != 1 || numE != 1){
+    throw new IllegalStateException("num of S and E incorrect!");
+    }
     }
        
     public String toString(){
@@ -77,13 +87,13 @@ public class Maze {
 	for (int r = 0; r < maze.length; r ++){
 	    for (int c = 0; c < maze[0].length; c++){
 		if (maze[r][c] == 'S'){
-		    maze[r][c] == ' ';
+		    maze[r][c] = ' ';
 		    return solve(r,c);
 		}
 		    
 	    }
 	}
-	return 0;
+	return -1;
      
 	
             //find the location of the S. 
@@ -119,26 +129,36 @@ public class Maze {
         }
 
         //COMPLETE SOLVE
+        maze[row][col] = '@';
+        
 
-	for (int i = 0; i < 8; i++){
+	for (int i = 0; i < 4; i++){
 	    int nextRow = row + moveSet[0][i];
 	    int nextCol = col + moveSet[1][i];
-	    if (maze[nexRow][nextCol] == ' '){
-		if(solve(nextRow,nextCol)){
-			return 1;
-		}
-	    }
-        return -1; //so it compiles
+            if (maze[nextRow][nextCol] == 'E'){
+                    return 1;
+            }
+            if (maze[nextRow][nextCol] == ' '){
+                maze[nextRow][nextCol] = '@';
+                int length = solve(nextRow,nextCol);
+                if(length != -1){
+                        return length + 1;
+                }
+                                maze[nextRow][nextCol] = '.';
+            }
+            
     }
-
-}*/
+        return -1; //so it compiles
+    } 
 
     
   public static void main(String[]args){
       try{
-	     Maze test = new Maze("data1.dat");
-	     test.ReadFile("data1.dat");
+	     Maze test = new Maze("Maze1.txt");
+	     test.ReadFile("Maze1.txt");
 	     System.out.println(test);
+         test.setAnimate(true);
+         System.out.println(test.solve());
       }catch(FileNotFoundException e){
 	  System.out.println("File not found!");
 	      }
