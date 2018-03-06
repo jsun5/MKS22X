@@ -28,7 +28,7 @@ public class Maze {
             cols = line.length();
 	    rows++;
 	    ans += line;
-            System.out.println(line);//hopefully you can do other things with the line
+      //      System.out.println(line);//hopefully you can do other things with the line
         }
 	maze = new char[rows][cols];
 	int i = 0;
@@ -157,8 +157,9 @@ public class Maze {
 	     Maze test = new Maze("Maze1.txt");
 	     test.ReadFile("Maze1.txt");
 	     System.out.println(test);
-         test.setAnimate(true);
+         //test.setAnimate(true);
          System.out.println(test.solve());
+         System.out.println(test);
       }catch(FileNotFoundException e){
 	  System.out.println("File not found!");
 	      }
