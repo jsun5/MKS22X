@@ -6,7 +6,12 @@ public class USACO{
      {24, 20, 20, 20, 20, 30},
      {20, 20, 14, 14, 20, 20}};
     
-
+    private char[][] map = {{'.','.','.','*','.'}
+			    {'.','.','.','*','.'}
+			    {'.','.','.','.','.'}
+			    {'.','.','.','.','.'}};
+    private int[][] past;
+    private int[][] current;
 
 	
     //    public static int bronze(){
@@ -54,6 +59,12 @@ public class USACO{
 	}
 	return sum * 72 * 72;
     }
+
+    public static int silver(int time, int R1, int C1, int R2, int C2){
+	past = int[map.length][map[0].length];
+	
+     }
+
 
     public static void main(String[]args){
 	USACO test = new USACO();
