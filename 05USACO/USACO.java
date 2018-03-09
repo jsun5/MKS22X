@@ -125,7 +125,15 @@ public class USACO{
     
     ////////////////////////////////////////////////////////////////////////////////////////
 
-    // public int silver(String fileName) throws FileNotFoundException{
+    public int silver(String fileName) throws FileNotFoundException{
+	int rows, cols, time, R1, C1, R
+	File text = new File(fileName);
+	Scanner inf = new Scanner(text);
+
+	String[] line1 = inf.next().split(" ");
+	
+	while(inf.hasNext()){
+	    
 	
     
     public int silver(int rows,int cols, int time, int R1, int C1, int R2, int C2){
