@@ -9,10 +9,11 @@ public class USACO{
      {24, 20, 20, 20, 20, 30},
      {20, 20, 14, 14, 20, 20}}; */
     
-          private  char[][] map = {{'.','.','.','*','.'},
-                                    {'.','.','.','*','.'},
-                                    {'.','.','.','.','.'},
-                                    {'.','.','.','.','.'}};
+          private  char[][] map = {{'.','.','.','.','.'},
+                                   {'.','.','.','.','.'},
+                                   {'.','.','.','.','.'},
+                                   {'.','.','.','.','.'},
+				   {'.','.','.','.','.'}};
      private int[][] past;
     private int[][] current;
 	
@@ -123,7 +124,9 @@ public class USACO{
     
     
     ////////////////////////////////////////////////////////////////////////////////////////
-    
+
+    // public int silver(String fileName) throws FileNotFoundException{
+	
     
     public int silver(int rows,int cols, int time, int R1, int C1, int R2, int C2){
         past = new int[rows][cols];
@@ -147,10 +150,12 @@ public class USACO{
                 update();
                 count ++;
                 System.out.println("time" + count);
+		past = current;
+		current = new int[rows][cols];
                 printS();
         }
         
-        return 1;
+        return past[R2-1][C2-1];
                 
      }
 
@@ -177,6 +182,7 @@ public class USACO{
                     if (c < cols -1&& past[r][c+1] != -1){
                         sum += past[r][c+1];
                     }
+		    System.out.println(sum);
                     current[r][c] = sum;
                 }
             }
@@ -217,12 +223,12 @@ public class USACO{
 //        test.print();
 //        System.out.println(test.calc(22)); 
     
-        try{
-        System.out.println(bronze("makelake.in"));
-        }
-        catch(FileNotFoundException e){
-        }
- //   System.out.println(test.silver(4,5,6,1,3,1,5));
+	//       try{
+	// System.out.println(bronze("makelake.in"));
+	// }
+        //catch(FileNotFoundException e){
+	// }
+    System.out.println(test.silver(5,5,2,3,3,3,5));
     
     }
 }
