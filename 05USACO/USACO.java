@@ -1,22 +1,82 @@
+import java.util.*;
+import java.io.*;
+
 public class USACO{
 
-    private int[][] elevations =
+/*    private int[][] elevations =
     {{28, 25, 20, 32, 34, 36},
      {27, 25, 20, 20, 30, 34},
      {24, 20, 20, 20, 20, 30},
-     {20, 20, 14, 14, 20, 20}};
+     {20, 20, 14, 14, 20, 20}}; */
     
-    private char[][] map = {{'.','.','.','*','.'}
-			    {'.','.','.','*','.'}
-			    {'.','.','.','.','.'}
-			    {'.','.','.','.','.'}};
-    private int[][] past;
+          private  char[][] map = {{'.','.','.','*','.'},
+                                    {'.','.','.','*','.'},
+                                    {'.','.','.','.','.'},
+                                    {'.','.','.','.','.'}};
+     private int[][] past;
     private int[][] current;
-
 	
-    //    public static int bronze(){
-    // }
+     public static int bronze(String fileName) throws FileNotFoundException{
+        int R, C, E, R_s, C_s, D_s;
+        int[][]elevations;
+        
 
+        File text = new File(fileName);
+        Scanner inf = new Scanner(text);
+
+
+        //Instantialize 1st line
+        String[] line1 = inf.nextLine().split(" ");
+        R = Integer.parseInt(line1[0]);
+        C = Integer.parseInt(line1[1]);
+        E = Integer.parseInt(line1[2]);
+        elevations = new int[R][C];
+        
+        //Fill in int[][]elevations 2nd... line
+        for (int r = 0; r < R; r++){
+            String[] row = inf.nextLine().split(" ");
+            for (int c = 0; c < C; c++){
+                elevations[r][c] = Integer.parseInt(row[c]);
+            }
+        }
+        
+        //Commands, changing elevations
+        while(inf.hasNextLine()){
+            String[] command = inf.nextLine().split(" ");
+            R_s = Integer.parseInt(command[0]) - 1;
+            C_s = Integer.parseInt(command[1]) - 1;
+            D_s = Integer.parseInt(command[2]);
+            int largest = 0;
+            for (int r = 0; r < 3; r++){
+                for (int c = 0; c < 3; c++){
+                    if (elevations[R_s + r][C_s + c] > largest){
+                        largest = elevations[R_s + r][C_s + c];
+                    }
+                }
+            }
+            for (int r = 0; r < 3; r++){
+                for (int c = 0; c < 3; c++){
+                    if (elevations[R_s + r][C_s + c] > largest - D_s){
+                        elevations[R_s + r][C_s + c] = largest - D_s;
+                    }
+                }
+            }
+        }
+        
+        //calculate sum
+        int sum = 0;
+        for (int r = 0; r < elevations.length; r++){
+            for (int c = 0; c < elevations[0].length; c++){
+                if (elevations[r][c] < E){
+                    sum += E - elevations[r][c];
+                }
+            }
+        }
+        return sum * 72 * 72;
+     }
+
+
+/*
     private void stomp(int R_s, int C_s, int D_s){
 	R_s--;
 	C_s--;
@@ -59,21 +119,111 @@ public class USACO{
 	}
 	return sum * 72 * 72;
     }
-
-    public static int silver(int time, int R1, int C1, int R2, int C2){
-	past = int[map.length][map[0].length];
-	
+*/
+    
+    
+    ////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    public int silver(int rows,int cols, int time, int R1, int C1, int R2, int C2){
+        past = new int[rows][cols];
+        current = new int[rows][cols];
+        
+        R1--;
+        C1--;
+        
+    
+        for (int r = 0; r < rows; r++){
+            for (int c = 0; c < cols; c++){
+                if (map[r][c] == '*'){
+                    past[r][c] = -1;
+                }
+            }
+        }
+        past[R1][C1] = 1;
+        printS();
+        int count = 0;
+        while (count < time){
+                update();
+                count ++;
+                System.out.println("time" + count);
+                printS();
+        }
+        
+        return 1;
+                
      }
 
+    public void update(){
+        int rows = past.length;
+        int  cols = past[0].length;
+        for (int r = 0; r < rows; r++){
+            for (int c = 0; c < cols; c++){    
+;
+                if (past[r][c] == -1){
+                    current[r][c] = -1;
+                }
+                else{
+                    int sum = 0;
+                    if (r > 0 && past[r-1][c] != -1){
+                        sum += past[r-1][c];
+                    }
+                    if (r < rows -1&& past[r+1][c] != -1){
+                        sum += past[r+1][c];
+                    }
+                    if (c > 0 && past[r][c-1] != -1){
+                        sum += past[r][c-1];
+                    }
+                    if (c < cols -1&& past[r][c+1] != -1){
+                        sum += past[r][c+1];
+                    }
+                    current[r][c] = sum;
+                }
+            }
+        }
+    }
+                
+    public void printS(){
+	String ans = "MAP:\n";
+	for (int r = 0; r < map.length; r++){
+	    for (int c = 0; c < map[0].length; c++){
+		ans += map[r][c] + " ";
+	    }
+	    ans += "\n";
+	}
+    ans += "PAST:\n";
+    for (int r = 0; r < map.length; r++){
+	    for (int c = 0; c < map[0].length; c++){
+		ans += past[r][c] + " ";
+	    }
+	    ans += "\n";
+	}
+    ans += "CURRENT:\n";
+    for (int r = 0; r < map.length; r++){
+	    for (int c = 0; c < map[0].length; c++){
+		ans += current[r][c] + " ";
+	    }
+	    ans += "\n";
+	}
+	System.out.println(ans);
+    }
 
     public static void main(String[]args){
-	USACO test = new USACO();
-	test.print();
-	test.stomp(1,4,4);
-	test.print();
-	test.stomp(1,1,10);
-	test.print();
-	System.out.println(test.calc(22));
+        USACO test = new USACO();
+//        test.print();
+//        test.stomp(1,4,4);
+//        test.print();
+//        test.stomp(1,1,10);
+//        test.print();
+//        System.out.println(test.calc(22)); 
+    
+        try{
+        System.out.println(bronze("makelake.in"));
+        }
+        catch(FileNotFoundException e){
+        }
+ //   System.out.println(test.silver(4,5,6,1,3,1,5));
+    
     }
 }
 	
