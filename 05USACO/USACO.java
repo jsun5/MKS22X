@@ -126,15 +126,76 @@ public class USACO{
     ////////////////////////////////////////////////////////////////////////////////////////
 
     public int silver(String fileName) throws FileNotFoundException{
-	int rows, cols, time, R1, C1, R
-	File text = new File(fileName);
-	Scanner inf = new Scanner(text);
+        int rows, cols, time, R1, C1, R2, C2;
+        char[][] map;
+        int[][] past, current;
+        
+        File text = new File(fileName);
+        Scanner inf = new Scanner(text);
 
-	String[] line1 = inf.next().split(" ");
-	
-	while(inf.hasNext()){
-	    
-	
+        String[] line1 = inf.nextLine().split(" ");
+        rows = Integer.parseInt(line1[0]);
+        cols = Integer.parseInt(line1[1]);
+        time = Integer.parseInt(line1[2]);
+        map = new char[rows][cols];
+        past = new int[rows][cols];
+        current = new int[rows][cols];
+        
+        //instantialize map + past at the SAME TIME
+        for (int r = 0; r < rows; r ++){
+            String row = inf.nextLine();
+            for (int c = 0; c < cols ; c++){
+      //          System.out.println(row.charAt(c));
+                map[r][c] = row.charAt(c);
+                if (map[r][c] == '*'){
+                    past[r][c] = -1;
+                }
+            }
+        }
+        
+        String[]lastLine = inf.nextLine().split(" ");
+        R1 = Integer.parseInt(lastLine[0])-1;
+        C1 = Integer.parseInt(lastLine[1])-1;
+        R2 = Integer.parseInt(lastLine[2])-1;
+        C2 = Integer.parseInt(lastLine[3])-1;
+        past[R1][C1] = 1;
+        
+        int count = 0;
+        while (count < time){
+            for (int r = 0; r < rows; r++){
+                for (int c = 0; c < cols; c++){    
+                    if (past[r][c] == -1){
+                        current[r][c] = -1;
+                    }
+                    else{
+                        int sum = 0;
+                        if (r > 0 && past[r-1][c] != -1){
+                            sum += past[r-1][c];
+                        }
+                        if (r < rows -1&& past[r+1][c] != -1){
+                            sum += past[r+1][c];
+                        }
+                        if (c > 0 && past[r][c-1] != -1){
+                            sum += past[r][c-1];
+                        }
+                        if (c < cols -1&& past[r][c+1] != -1){
+                            sum += past[r][c+1];
+                        }
+                 //       System.out.println(sum);
+                        current[r][c] = sum;
+                    }
+                }
+            }
+            count ++;
+         //   System.out.println("time" + count);
+            past = current;
+            current = new int[rows][cols];
+          //  printS();
+        }
+        
+        return past[R2][C2];
+                
+     }
     
     public int silver(int rows,int cols, int time, int R1, int C1, int R2, int C2){
         past = new int[rows][cols];
@@ -208,7 +269,7 @@ public class USACO{
     ans += "PAST:\n";
     for (int r = 0; r < map.length; r++){
 	    for (int c = 0; c < map[0].length; c++){
-		ans += past[r][c] + " ";
+            ans += past[r][c] + " ";
 	    }
 	    ans += "\n";
 	}
@@ -231,13 +292,13 @@ public class USACO{
 //        test.print();
 //        System.out.println(test.calc(22)); 
     
-	//       try{
+	       try{
 	// System.out.println(bronze("makelake.in"));
 	// }
-        //catch(FileNotFoundException e){
-	// }
-    System.out.println(test.silver(5,5,2,3,3,3,5));
-    
+        System.out.println(test.silver("ctravel2.in"));
+    }
+            catch(FileNotFoundException e){
+	 }
     }
 }
 	
