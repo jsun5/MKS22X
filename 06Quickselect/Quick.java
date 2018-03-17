@@ -22,6 +22,36 @@ public class Quick{
         print(data);
         return j;
     }
+    
+    public static int partitionD(int[]data,int low, int hi){
+        int pivot = (int) (Math.random() * (hi - low)) + low; //cool random by Mohammed
+        System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
+        swap (data,low,pivot);
+        int lt = low + 1;
+        int gt = hi;
+        int i = lt;
+        while(i < gt){
+            if (data[i] < data[low]){
+                i ++;
+                lt++;
+            }
+            if (data[i] == data[low]){
+                i++;
+            }
+            else{
+                swap(data,i,gt);
+                gt--;
+            }
+            print(data);
+            System.out.println("i: " + i);
+            System.out.println("lt: " + lt);
+            System.out.println("gt: " + gt);
+        }
+        swap(data,i,low);
+        print(data);
+        return i;
+    }
+                
 
     public static void print(int[]data){
 	String ans = "{";
@@ -52,13 +82,14 @@ public class Quick{
         return data[k];
     }
     
-   // public static void quicksort (int[]ary){
+//   public static void quicksort (int[]ary){
         
 
     public static void main(String[]args){
 	int[] ex = {999,999,999,4,1,0,3,2,999,999,999};
 	//System.out.println(Quick.partition(ex,0,10));
-    System.out.println(Quick.quickselect(ex, 4));
+    System.out.println(Quick.partitionD(ex,0,10));
+    //System.out.println(Quick.quickselect(ex, 4));
     }
 }
 	
