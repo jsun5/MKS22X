@@ -30,15 +30,16 @@ public class Quick{
         int lt = low + 1;
         int gt = hi;
         int i = lt;
-        while(i < gt){
+        while(i <= gt){
             if (data[i] < data[low]){
+                swap(data,i,lt);
                 i ++;
                 lt++;
             }
-            if (data[i] == data[low]){
+            else if (data[i] == data[low]){
                 i++;
             }
-            else{
+            else if (data[i] > data[low]){
                 swap(data,i,gt);
                 gt--;
             }
@@ -47,9 +48,9 @@ public class Quick{
             System.out.println("lt: " + lt);
             System.out.println("gt: " + gt);
         }
-        swap(data,i,low);
+        swap(data,gt,low);
         print(data);
-        return i;
+        return gt;
     }
                 
 
@@ -87,9 +88,11 @@ public class Quick{
 
     public static void main(String[]args){
 	int[] ex = {999,999,999,4,1,0,3,2,999,999,999};
+    int[] ex2 = {0,2,1,2,0,2,0,0,2,1,1,2, 1,1,0,2,1};
 	//System.out.println(Quick.partition(ex,0,10));
-    System.out.println(Quick.partitionD(ex,0,10));
+    //System.out.println(Quick.partitionD(ex,0,10));
     //System.out.println(Quick.quickselect(ex, 4));
+        System.out.println(Quick.partitionD(ex2,0,15));
     }
 }
 	
