@@ -24,10 +24,11 @@ public class Quick{
     }
     
     public static int partitionD(int[]data,int low, int hi){
+        print(data);
         int pivot = (int) (Math.random() * (hi - low)) + low; //cool random by Mohammed
         System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
         swap (data,low,pivot);
-        int lt = low + 1;
+        int lt = low;
         int gt = hi;
         int i = lt;
         while(i <= gt){
@@ -71,7 +72,7 @@ public class Quick{
     }
     
     public static int quickselect(int[]data,int k){
-        int i = data.length;
+        int i = partition(data,0,data.length - 1);
         while (i != k){
             if (i > k){
                 i = partition(data, 0, i - 1);
@@ -83,16 +84,29 @@ public class Quick{
         return data[k];
     }
     
-//   public static void quicksort (int[]ary){
+    public static void quicksort (int[]ary){
+        quicksorter(ary, 0, ary.length - 1);
+    }
+    
+    public static void quicksorter(int[]ary, int low, int hi){
+        if (low < hi){
+            int pivot = partition(ary, low, hi);
+            quicksorter(ary, low, pivot);
+            quicksorter(ary, pivot + 1, hi);
+        }
+        print(ary);
+    }
+        
         
 
     public static void main(String[]args){
 	int[] ex = {999,999,999,4,1,0,3,2,999,999,999};
-    int[] ex2 = {0,2,1,2,0,2,0,0,2,1,1,2, 1,1,0,2,1};
+    int[] ex2 = {0,2,1,2,0};
 	//System.out.println(Quick.partition(ex,0,10));
     //System.out.println(Quick.partitionD(ex,0,10));
     //System.out.println(Quick.quickselect(ex, 4));
-        System.out.println(Quick.partitionD(ex2,0,15));
+        //System.out.println(Quick.partitionD(ex2,0,4));
+    Quick.quicksort(ex);
     }
 }
 	
