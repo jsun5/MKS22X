@@ -1,11 +1,20 @@
 public class Merge{
     
+//    public static void mergesort(int[]data){
+  //      msort(data, new int[data.length), 0, data.length);
+ //   }
+    
+   // public static void (int[]data,int[]temp,int lo, int hi){
+        
+    //}
+    
     public static int[] merge(int[]data, int[]ans, int lo, int mid, int hi){
-	ans = new int[data.length];
+        ans = new int[data.length];
         int i1 = lo;
-	mid = (lo + hi) / 2;
-	int i2 = mid + 1;
+        mid = (lo + hi) / 2 - 1;
+        int i2 = mid;
         int counter = 0;
+        System.out.println("i1: " + i1 + "mid: " + mid  + "i2: " + i2);
         while (i1 < mid && i2 < hi){
             if (data[i1] < data[i2]){
                 ans[counter] = data[i1];
@@ -42,7 +51,7 @@ public class Merge{
     
     public static void main(String[]args){
         int[] tester = {2,4,7,1,2,2,5,6,8};
-	int[] temp = {};
-        print(merge(tester,temp,0,4,9));
+        int[] temp = {};
+        print(merge(tester,temp,0,3,9));
     }
 }
