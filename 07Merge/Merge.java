@@ -22,7 +22,7 @@ public class Merge{
         int i1 = lo;
         int i2 = mid;
         int counter = 0;
-        System.out.println("i1: " + i1 + "mid: " + mid  + "i2: " + i2);
+	System.out.println("i1: " + i1 + "mid: " + mid  + "i2: " + i2);
         while (i1 < mid && i2 < hi){
             if (data[i1] < data[i2]){
                 ans[counter] = data[i1];

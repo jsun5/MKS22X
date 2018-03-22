@@ -2,7 +2,7 @@ public class Quick{
 
     public static int partition(int[] data, int low, int hi){
         int pivot = (int) (Math.random() * (hi - low)) + low; //cool random by Mohammed
-        System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
+	//    System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
         swap (data,low,pivot);
         int i = low + 1;
         int j = hi;
@@ -14,12 +14,12 @@ public class Quick{
             swap(data, i, j);
             j--;
             }
-            print(data);
-            System.out.println("i: " + i);
-            System.out.println("j: " + j);
+	    //  print(data);
+	    // System.out.println("i: " + i);
+            //System.out.println("j: " + j);
         }
         swap (data,j,low);
-        print(data);
+        //print(data);
         return j;
     }
     
@@ -94,7 +94,7 @@ public class Quick{
             quicksorter(ary, low, pivot);
             quicksorter(ary, pivot + 1, hi);
         }
-        print(ary);
+	// print(ary);
     }
         
         
