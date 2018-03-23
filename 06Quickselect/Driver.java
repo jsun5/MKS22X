@@ -69,7 +69,7 @@ private static final int INCREASE = 0;
      * Test your sort here!
      
      */
-    Quick.quicksort(start);
+    Quick.quicksortI(start);
     long elapsedTime = System.currentTimeMillis() - startTime;
     if(Arrays.equals(start,result)){
       System.out.println("PASS Case "+name(type)+" array, size:"+size+" "+elapsedTime/1000.0+"sec ");

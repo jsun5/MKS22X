@@ -96,7 +96,38 @@ public class Quick{
         }
 	// print(ary);
     }
-        
+
+
+    public static void insertionSort(int[] data, int lo, int hi){
+	//	print(data);
+        for (int i = lo; i < hi; i ++) {
+            for (int ind = i + 1; ind > 0; ind --) {
+                if (data[ind ] < data[ind - 1]) {
+                    swap(data, ind, ind- 1);
+                }
+            }
+        }
+	//	print(data);
+    }
+
+
+    
+    public static void quicksortI (int[]ary){
+        quicksorterI(ary, 0, ary.length - 1);
+    }
+    
+    public static void quicksorterI(int[]ary, int low, int hi){
+	if (hi - low <= 2){
+	    insertionSort(ary, low, hi);
+	}
+	else{ int pivot = partition(ary, low, hi);
+            quicksorterI(ary, low, pivot);
+            quicksorterI(ary, pivot + 1, hi);
+        }
+	// print(ary);
+    }
+
+    
         
 
     public static void main(String[]args){
@@ -106,7 +137,9 @@ public class Quick{
     //System.out.println(Quick.partitionD(ex,0,10));
     //System.out.println(Quick.quickselect(ex, 4));
         //System.out.println(Quick.partitionD(ex2,0,4));
-    Quick.quicksort(ex);
+    // Quick.quicksort(ex);
+    //Quick.insertionSort(ex,0,10);
+    Quick.quicksortI(ex);
     }
 }
 	
