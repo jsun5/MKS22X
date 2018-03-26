@@ -5,10 +5,11 @@ public class Merge{
     }
     
     public static void msort(int[]data,int[]temp,int lo, int hi){
-        if (lo >= hi){
+        if (hi - lo <=2){
+            insertionsort(data,lo,hi);
             return;
         }
-        for (int i = lo; i < hi; i++){
+        for (int i = lo; i <= hi; i++){
             temp[i] = data[i];
         }
         int mid = (lo/2) + (hi/2);
@@ -53,6 +54,26 @@ public class Merge{
             ans += data[i] + ", ";
         }
         System.out.println( ans + "]");
+    }
+    
+    public static void insertionsort(int[] data, int lo, int hi){ //helped by robin han
+        int ind;
+        for (int i = lo; i < hi+1; i ++) {
+            int k = data[i];
+            for (ind = i; ind > lo && k < data[ind-1]; ind --) {
+                data[ind] = data[ind-1];
+            }
+            data[ind] = k;
+        }
+	//	print(data);
+    
+    }
+
+
+        public static void swap (int[]data,int a, int b){
+	int x = data[a];
+	data[a] = data[b];
+	data[b] = x;
     }
     
     public static void main(String[]args){
