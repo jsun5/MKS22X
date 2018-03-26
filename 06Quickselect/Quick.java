@@ -139,7 +139,7 @@ public class Quick{
         //System.out.println(Quick.partitionD(ex2,0,4));
     // Quick.quicksort(ex);
     //Quick.insertionSort(ex,0,10);
-    Quick.quicksortI(ex);
+    Quick.quicksort(ex);
     }
 }
 	
