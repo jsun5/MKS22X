@@ -84,6 +84,7 @@ public class Quick{
         return data[k];
     }
     
+    /* OLDER VERSION: NO INSERTION
     public static void quicksort (int[]ary){
         quicksorter(ary, 0, ary.length - 1);
     }
@@ -95,34 +96,34 @@ public class Quick{
             quicksorter(ary, pivot + 1, hi);
         }
 	// print(ary);
-    }
+    }*/
 
 
-    public static void insertionSort(int[] data, int lo, int hi){
-	//	print(data);
-        for (int i = lo; i < hi; i ++) {
-            for (int ind = i + 1; ind > 0; ind --) {
-                if (data[ind ] < data[ind - 1]) {
-                    swap(data, ind, ind- 1);
-                }
+    public static void insertionsort(int[] data, int lo, int hi){ //helped by robin han
+        int ind;
+        for (int i = lo; i < hi+1; i ++) {
+            int k = data[i];
+            for (ind = i; ind > lo && k < data[ind-1]; ind --) {
+                data[ind] = data[ind-1];
             }
+            data[ind] = k;
         }
 	//	print(data);
+    
     }
 
-
     
-    public static void quicksortI (int[]ary){
-        quicksorterI(ary, 0, ary.length - 1);
+    public static void quicksort (int[]ary){
+        quicksorter(ary, 0, ary.length - 1);
     }
     
-    public static void quicksorterI(int[]ary, int low, int hi){
+    public static void quicksorter(int[]ary, int low, int hi){
 	if (hi - low <= 2){
-	    insertionSort(ary, low, hi);
+	    insertionsort(ary, low, hi);
 	}
 	else{ int pivot = partition(ary, low, hi);
-            quicksorterI(ary, low, pivot);
-            quicksorterI(ary, pivot + 1, hi);
+            quicksorter(ary, low, pivot);
+            quicksorter(ary, pivot + 1, hi);
         }
 	// print(ary);
     }
@@ -135,11 +136,11 @@ public class Quick{
     int[] ex2 = {0,2,1,2,0};
 	//System.out.println(Quick.partition(ex,0,10));
     //System.out.println(Quick.partitionD(ex,0,10));
-    //System.out.println(Quick.quickselect(ex, 4));
+    System.out.println(Quick.quickselect(ex, 6));
         //System.out.println(Quick.partitionD(ex2,0,4));
     // Quick.quicksort(ex);
     //Quick.insertionSort(ex,0,10);
-    Quick.quicksort(ex);
+    //Quick.quicksort(ex);
     }
 }
 	
