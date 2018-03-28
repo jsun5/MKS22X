@@ -24,9 +24,9 @@ public class Quick{
     }
     
     public static int partitionD(int[]data,int low, int hi){
-        print(data);
+	//   print(data);
         int pivot = (int) (Math.random() * (hi - low)) + low; //cool random by Mohammed
-        System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
+	//   System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
         swap (data,low,pivot);
         int lt = low;
         int gt = hi;
@@ -44,13 +44,13 @@ public class Quick{
                 swap(data,i,gt);
                 gt--;
             }
-            print(data);
-            System.out.println("i: " + i);
-            System.out.println("lt: " + lt);
-            System.out.println("gt: " + gt);
+	    //    print(data);
+	    // System.out.println("i: " + i);
+	    // System.out.println("lt: " + lt);
+	    // System.out.println("gt: " + gt);
         }
         swap(data,gt,low);
-        print(data);
+	//      print(data);
         return gt;
     }
                 
@@ -136,11 +136,12 @@ public class Quick{
     int[] ex2 = {0,2,1,2,0};
 	//System.out.println(Quick.partition(ex,0,10));
     //System.out.println(Quick.partitionD(ex,0,10));
-    System.out.println(Quick.quickselect(ex, 6));
+    //System.out.println(Quick.quickselect(ex, 6));
         //System.out.println(Quick.partitionD(ex2,0,4));
     // Quick.quicksort(ex);
     //Quick.insertionSort(ex,0,10);
-    //Quick.quicksort(ex);
+    Quick.quicksort(ex);
+    print(ex);
     }
 }
 	
