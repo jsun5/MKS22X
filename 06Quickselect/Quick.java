@@ -23,24 +23,25 @@ public class Quick{
         return j;
     }
     
-    public static int partitionD(int[]data,int low, int hi){
+    public static int[] partitionD(int[]data,int low, int hi){
 	//   print(data);
         int pivot = (int) (Math.random() * (hi - low)) + low; //cool random by Mohammed
 	//   System.out.println("pivot index: " + pivot +", pivot: " + data[pivot]);
+        int pivoter = data[pivot];
         swap (data,low,pivot);
-        int lt = low+1;
+        int lt = low;
         int gt = hi;
-        int i = lt;
+        int i = lt + 1;
         while(i <= gt){
-            if (data[i] < data[low]){
+            if (data[i] < pivoter){
                 swap(data,i,lt);
                 i ++;
                 lt++;
             }
-            else if (data[i] == data[low]){
+            else if (data[i] == pivoter){
                 i++;
             }
-            else if (data[i] > data[low]){
+            else if (data[i] > pivoter){
                 swap(data,i,gt);
                 gt--;
             }
@@ -49,9 +50,8 @@ public class Quick{
 	    // System.out.println("lt: " + lt);
 	    // System.out.println("gt: " + gt);
         }
-        swap(data,gt,low);
 	//      print(data);
-        return gt;
+        return new int[] {lt, i};
     }
                 
 
@@ -121,9 +121,9 @@ public class Quick{
 	if (hi - low <= 2){
 	    insertionsort(ary, low, hi);
 	}
-	else{ int pivot = partition(ary, low, hi);
-            quicksorter(ary, low, pivot);
-            quicksorter(ary, pivot + 1, hi);
+	else{ int[] pivot = partitionD(ary, low, hi);
+            quicksorter(ary, low, pivot[0]);
+            quicksorter(ary, pivot[1], hi);
         }
 	// print(ary);
     }
