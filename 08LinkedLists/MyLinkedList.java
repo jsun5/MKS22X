@@ -1,73 +1,55 @@
 public class MyLinkedList{
-    private Node first,last;
-    private int length;
+    private Node head,tail;
+    private int size;
     
     public MyLinkedList(){
-        first = null;
-        last = null;
-        length = 0;
+        head = null;
+        tail = null;
+        size = 0;
     }
 
     private Node getNode(int index){
-	Node current = first;
-        for (int i = 0; i < n; i++){
+        Node current = head;
+        for (int i = 0; i < index; i++){
             current = current.getNext();
         }
-	return current;
+        return current;
     }
 
+    public int size(){
+        return size;
+    }
+    
     public void clear(){
-    }
-	
-    public int getLength(){
-        return length;
-    }
-    
-    public Node getFirst(){
-        return first;
-    }
-    
-    public Node getLast(){
-        return last;
-    }
-    
-    public void Longer(){
-        length++;
-    }
-    
-    public void setFirst(Node n){
-        first = n;
-    }
-    
-    public void setLast(Node n){
-        last = n;
+        size = 0;
     }
     
     public boolean add(int value){
-        if(getLength() == 0){
-	    Node only = new Node(value);
-            first = only;
-	    last = only;
-            Longer();
-            return true;
+        if(size() == 0){
+            Node only = new Node(value);
+            head = only;
+            tail = only;
+            size++;
         }
-        if(getLength() == 1){
-            last = new Node(value, first, null);
-            first.setNext(last);
-            Longer();
-            return true;
+         else if (size() == 1){
+            tail = new Node(value, head, null);
+            head.setNext(tail);
+            size++;
         }
-	getNode(getLength()-1).setNext(new Node(value, getNode(getLength()-2)));
+        else{
+            tail = new Node(value, getNode(size()-1), null);
+            getNode(size()-1).setNext(tail);
+            size++;
+        }
         return true;
     }
         
         
-
     public int get(int n){
-        if (n == length-1){
-            return last;
+        if (n == size() -1){
+            return tail.getValue();
         }
-        Node current = first;
+        Node current = head;
         for (int i = 0; i < n; i++){
             current = current.getNext();
         }
@@ -75,17 +57,60 @@ public class MyLinkedList{
     }
 
     public int set(int index, int value){
-        if (n == length-1){
-            last = new Node(value);
+        if (index == size-1){
+            tail.setValue(value);
         }
-        int prev = 0;
-        Node current = first;
-        for (int i = 0; i < n; i++){
-            current = current.getNext();
-        }
-        prev = current.getValue();
-        
+        Node current = getNode(index);
+        int past = current.getValue();
+        current.setValue(value);
+        return past;
     }
+    
+    public String toString(){
+        String ans = "[";
+        for (int i = 0; i < size(); i++){
+            ans += getNode(i).toString() + ",";
+        }
+        return ans + "]";
+    }
+        
+    public int indexOf(int value){
+        int i = 0;
+        Node current = head;
+        while(i < size()){
+            if(current.getValue()==value){
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+    
+    public void add (int index, int value){
+
+        if(index == size()){
+            add(value);
+        }
+        else if(index == 0){
+            Node n = new Node(value, null, head);
+            head = n;
+            n.getNext().setPrev(head);
+            size++;
+        }
+        else{
+            Node before = getNode(index - 1);
+            Node after = getNode(index);
+            Node n = new Node(value, before, after);
+            before.setNext(n);
+            after.setPrev(n);
+            size++;
+        }
+    }
+    
+    //public int remove(int index){
+        
+            
+            
 
     private class Node{
         Node next,prev;
@@ -127,9 +152,39 @@ public class MyLinkedList{
             data = d;
         }   
 
-        private String toString(){
+        public String toString(){
             return "" + data;
         }
     }
+    
+    public static void main(String[]args){
+        MyLinkedList test = new MyLinkedList();
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(5);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(3);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(7);
+        //test.clear();
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        System.out.println(test.get(0));
+        
+        System.out.println(test.set(0,125));
+        System.out.println(test);
+        System.out.println(test.indexOf(125));
+        
+        test.add(3,12);
+        System.out.println(test);
+        System.out.println(test.size());
+    }
+}
 	    
 	
