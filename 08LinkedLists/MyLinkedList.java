@@ -107,9 +107,30 @@ public class MyLinkedList{
         }
     }
     
-    //public int remove(int index){
-        
-            
+    public int remove(int index){
+        int past = 0;
+        if(index == size()){
+            past = tail.getValue();
+            tail.setPrev(null);
+            tail = tail.getPrev();
+            tail.setNext(null);
+        }
+        else if(index == 0){
+            past = head.getValue();
+            head.setNext(null);
+            Node next = head.getNext();
+            next.setPrev(null);
+            head = next;
+        }
+        else{
+            past = getNode(index).getValue();
+            Node before = getNode(index - 1);
+            Node after = getNode(index + 1);
+            before.setNext(after);
+            after.setPrev(before);
+        }
+        return past;
+    }
             
 
     private class Node{
@@ -182,6 +203,10 @@ public class MyLinkedList{
         System.out.println(test.indexOf(125));
         
         test.add(3,12);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.remove(1);
         System.out.println(test);
         System.out.println(test.size());
     }
