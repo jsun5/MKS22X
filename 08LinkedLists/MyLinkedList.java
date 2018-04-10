@@ -1,4 +1,7 @@
-public class MyLinkedList<T>{
+import java.util.LinkedList;
+ 
+
+public class MyLinkedList{
     private Node head,tail;
     private int size;
     
@@ -87,6 +90,7 @@ public class MyLinkedList<T>{
             if(current.getValue()==value){
                 return i;
             }
+            current=current.getNext();
             i++;
         }
         return -1;
@@ -243,105 +247,209 @@ public class MyLinkedList<T>{
         
         
     }*/
-    
-    public static void main(String[] args) {
-        System.out.println();
-        System.out.println("--- Get ---");
-        MyLinkedList a = new MyLinkedList();
-        
-        for (int x = 0; x < 10; x++) {
-            a.add(new Integer((int) (Math.random() * 100)));
+ public static void main(String[]args){
+      MyLinkedList nums = new MyLinkedList();
+      LinkedList<Integer> nums2 = new LinkedList<>();
+      
+      for(int i = 0; i < 2000; i++  ){
+        int index = (int)(Math.random()*(1 + nums.size()));
+        nums.add(index,i);
+        nums2.add(index,i);
+      }
+      for(int i = 0; i < nums.size(); i++  ){
+        if(nums.get(i) != nums2.get(i).intValue()){
+          System.out.println("FAIL Randomized adds location: "+i+" "+nums.get(i)+" vs "+nums2.get(i));
+          return;
         }
-        
-        System.out.println(a);
-        
-        for (int y = 0; y < 10; y++) {
-            System.out.println(y + ": " + a.get(y));
+      }
+      System.out.println("PASS Randomized adds");
+      
+      int max = nums.size();
+      for(int i = 0; i < max/2; i++  ){
+        if(nums.remove(i)!=nums2.remove(i).intValue()){
+          System.out.println("FAIL while removing index: "+i);
+          return;
         }
-        
-        System.out.println();
-        System.out.println("--- Set ---");
-        System.out.println(a);
-        
-        int former;
-        int replace;
-        
-        for (int q = 0; q < 10; q++) {
-            replace = 10 - q;
-            former = a.set(q, replace);
-            System.out.println("Change " + former + " to " + replace);
+      }
+      nums.remove(0);
+      nums2.remove(0);
+      nums.remove(nums.size()-1);
+      nums2.remove(nums2.size()-1);
+      
+      for(int i = 0; i < nums.size(); i++  ){
+        if(nums.get(i)!=nums2.get(i).intValue()){
+          System.out.println("FAIL consecutive removes");
+          return;
         }
-        
-        System.out.println(a);
-        
-        System.out.println();
-        System.out.println("--- Index Of ---");
-        System.out.println(a);
-        
-        for (int z = 0; z < 12; z++) {
-            System.out.println(z + ": " + a.indexOf(new Integer(z)));
+      }
+      System.out.println("PASS consecutive removes");
+      
+      
+      for(int i = 0; i < 1000; i++  ){
+        int index = (int)(Math.random()*(1 + nums.size()));
+        nums.add(index,i);
+        nums2.add(index,i);
+      }
+      for(int i = 0; i < nums.size(); i++  ){
+        if(nums.get(i) != nums2.get(i).intValue()){
+          System.out.println("FAIL Randomized adds location: "+i+" "+nums.get(i)+" vs "+nums2.get(i));
+          return;
         }
-        
-        System.out.println();
-        System.out.println("--- Add At End ---");
-        MyLinkedList b = new MyLinkedList();
-        System.out.println(b);
-
-        for (int i = 0; i < 10; i++) {
-            b.add(new Integer((int) (Math.random() * 100)));
+      }
+      System.out.println("PASS Randomized adds phase 2");
+      
+      
+      max = nums.size();
+      for(int i = 0; i < max/2; i++  ){
+        int index = (int)(Math.random()*nums.size());
+        if(nums.remove(index)!=nums2.remove(index).intValue()){
+          System.out.println("FAIL while removing index: "+index);
+          return;
         }
-
-        System.out.println(b);
-        System.out.println("Size: " + b.size());
-        
-        System.out.println();
-        System.out.println("--- Add At Index ---");
-        System.out.println(b);
-        
-        for (int s = 0; s < 13; s += 6) {
-            b.add(s, new Integer(-99));
-            System.out.println("Index " + s + ": " + b);
+      }
+      nums.remove(0);
+      nums2.remove(0);
+      nums.remove(nums.size()-1);
+      nums2.remove(nums2.size()-1);
+      
+      for(int i = 0; i < nums.size(); i++  ){
+        if(nums.get(i)!=nums2.get(i).intValue()){
+          System.out.println("FAIL randomized removes");
+          return;
         }
+      }
+      System.out.println("PASS randomized removes");
+      
+      //get-------------------
+      try{
+        nums.get(-3);
+        System.out.println("FAIL get access negative index did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS get out of bounds negateive index ");
+      }
+      
+      try{
+        nums.get(nums.size());
+        System.out.println("FAIL get access index too large did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS get out of bounds index too large");
+      }
+      
+      
+      //set-------------------
+      try{
+        nums.set(-3,5);
+        System.out.println("FAIL set access negative index did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS set out of bounds negateive index ");
         
-        System.out.println();
-        System.out.println("--- Remove Value ---");
-        MyLinkedList j = new MyLinkedList();
-        
-        for (int u = 1; u < 6; u++) {
-            j.add(new Integer(u));
+      }
+      
+      try{
+        nums.set(nums.size(),5);
+        System.out.println("FAIL set access index too large did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS set out of bounds index too large");
+      }
+      
+      
+      
+      //add-------------------
+      try{
+        nums.add(nums.size()+1,5);
+        System.out.println("FAIL add access index too large did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS add out of bounds index too large");
+      }
+      
+      try{
+        nums.add(-1,5);
+        System.out.println("FAIL add access negative index did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS add out of bounds negative index");
+      }
+      
+      
+      
+      //remove-------------------
+      try{
+        nums.remove(nums.size()+1);
+        System.out.println("FAIL remove access index too large did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS remove out of bounds index too large");
+      }
+      
+      try{
+        nums.remove(-1);
+        System.out.println("FAIL remove access index too large did not throw exception");
+        return;
+      }catch(IndexOutOfBoundsException e){
+        System.out.println("PASS remove out of bounds index too large");
+      }
+      
+      
+      //
+      nums.clear();
+      if(nums.size()==0){
+        System.out.println("PASS clear");
+      }else{
+        System.out.println("FAIL clear");
+        return;
+      }
+      
+      
+      
+      //REMOVE BY VALUE (not index)
+      nums.clear();
+      for(int i = 0; i < 10; i++){
+        nums.add(0,Integer.valueOf(i));
+      }
+      if(nums.remove(Integer.valueOf(0)) && nums.remove(Integer.valueOf(1)) &&
+      nums.remove(Integer.valueOf(5)) && nums.remove(Integer.valueOf(3)) &&
+      nums.remove(Integer.valueOf(8))&& nums.remove(Integer.valueOf(9)))  {
+        try{
+          int[]result = { 7, 6, 4, 2};
+          for(int i = 0; i < nums.size();i++ ){
+            if(result[i]!=nums.get(i)){
+              System.out.println("FAIL to remove by value. Final State bad");
+              return;
+            }
+          }
+        }catch(Exception e){
+          System.out.println("FAIL to remove by value. Exception thrown");
+          return;
         }
-        
-        System.out.println(j);
-        
-        for (int k = 1; k < 6; k += 2) {
-            System.out.println("Removing " + k);
-            j.remove(new Integer(k));
-            System.out.println(j);
-        }
-        
-        System.out.println();
-        System.out.println("--- Remove at Index ---");
-        MyLinkedList c = new MyLinkedList();
-        
-        for (int f = 0; f < 10; f++) {
-            c.add(new Integer((int) (Math.random() * 100)));
-        }
-        
-        System.out.println(c);
-        System.out.println("Size: " + c.size());
-        
-        System.out.println("Removed " + c.get(0) + " at index 0");
-        c.remove(0);
-        
-        System.out.println("Removed " + c.get(4) + " at index 4");
-        c.remove(4);
-        
-        System.out.println("Removed " + c.get(7) + " at index 7");
-        c.remove(7);
-        
-        System.out.println(c);
+      }else{
+        System.out.println("FAIL to remove by value.");
+        return;
+      }
+      System.out.println("PASS remove by values (Integer, not int).");
+      
+      nums.clear();
+      long end,start = System.currentTimeMillis();
+      
+      System.out.println("#Adding to 100000 values to the front, and 100000 to the end, should be fast.\n#If the next line doesn't print right away you have some issues.");
+      for(int i = 0; i < 100000; i++  ){
+        nums.add(i);
+        nums.add(nums.size(),i);
+      }
+      end = System.currentTimeMillis();
+      //mine was 8msec on a laptop, so 250 should be fine!
+      if(end - start > 250){
+        System.out.println("FAIL! Should be much faster than "+(end-start)+"msec");
+        return;
+      }else{
+        System.out.println("PASS "+ (end-start)+" msec current size: "+nums.size());
+      }
     }
-
-}
-	    
-	
+    
+    
+    
+  }
