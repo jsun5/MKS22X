@@ -208,43 +208,15 @@ public class MyLinkedListImproved<T>{
         }
     }
     
+    //public T Iterator()
+    
     public static void main(String[]args){
-        MyLinkedListImproved<Integer> test = new MyLinkedListImproved<>();
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        test.add(5);
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        test.add(3);
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        test.add(7);
-        //test.clear();
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        System.out.println(test.get(0));
-        
-        System.out.println(test.set(0,125));
-        System.out.println(test);
-        System.out.println(test.indexOf(125));
-        
-        test.add(3,12);
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        System.out.println("removed: " + test.remove(3));
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        System.out.println("removed: 125" + test.remove(125));
-        System.out.println(test);
-        System.out.println(test.size());
-        
-        
+ MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
+        n.add("fish");
+ System.out.println(n);
+     MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
+        m.add(new Integer(0));
+ System.out.println(m);
     }
 }
 
