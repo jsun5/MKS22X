@@ -1,10 +1,10 @@
 import java.util.LinkedList;
  
-public class MyLinkedList{
+public class MyLinkedListImproved<T>{
     private Node head,tail;
     private int size;
     
-    public MyLinkedList(){
+    public MyLinkedListImproved(){
         head = null;
         tail = null;
         size = 0;
@@ -26,7 +26,7 @@ public class MyLinkedList{
         size = 0;
     }
     
-    public boolean add(Integer value){
+    public boolean add(T value){
         if(size() == 0){
             Node only = new Node(value);
             head = only;
@@ -47,7 +47,7 @@ public class MyLinkedList{
     }
         
         
-    public int get(int index){
+    public T get(int index){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
@@ -61,7 +61,7 @@ public class MyLinkedList{
         return current.getValue();
     }
 
-    public int set(int index, Integer value){
+    public T set(int index, T value){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
@@ -69,7 +69,7 @@ public class MyLinkedList{
             tail.setValue(value);
         }
         Node current = getNode(index);
-        int past = current.getValue();
+        T past = current.getValue();
         current.setValue(value);
         return past;
     }
@@ -82,7 +82,7 @@ public class MyLinkedList{
         return ans + "]";
     }
         
-    public int indexOf(Integer value){
+    public int indexOf(T value){
         int i = 0;
         Node current = head;
         while(i < size()){
@@ -95,7 +95,7 @@ public class MyLinkedList{
         return -1;
     }
     
-    public void add (int index, Integer value){
+    public void add (int index, T value){
         if(index < 0 || index > size()){
             throw new IndexOutOfBoundsException();
         }
@@ -118,11 +118,11 @@ public class MyLinkedList{
         }
     }
     
-    public int remove(int index){
+    public T remove(int index){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
-        int past = 0;
+        T past = null;
         if(index == size()){
             if (size()==0){
                 past = head.getValue();
@@ -153,7 +153,7 @@ public class MyLinkedList{
         return past;
     }
     
-    public boolean remove (Integer Value){
+    public boolean remove (T Value){
         int index = indexOf(Value);
         if (index != -1){
             remove(index);
@@ -165,15 +165,15 @@ public class MyLinkedList{
 
     private class Node{
         Node next,prev;
-        int data;
+        T data;
 
-        public Node(int d){
+        public Node(T d){
             data = d;
             next = null;
             prev = null;
         }
         
-        public Node(int d, Node p, Node n){
+        public Node(T d, Node p, Node n){
             data = d;
             next = n;
             prev = p;
@@ -187,7 +187,7 @@ public class MyLinkedList{
             return prev;
         }
 
-        private int getValue(){
+        private T getValue(){
             return data;
         }
 
@@ -199,7 +199,7 @@ public class MyLinkedList{
             prev = p;
         }
 
-        private void setValue(int d){
+        private void setValue(T d){
             data = d;
         }   
 
@@ -208,8 +208,8 @@ public class MyLinkedList{
         }
     }
     
-/*    public static void main(String[]args){
-        MyLinkedList test = new MyLinkedList();
+    public static void main(String[]args){
+        MyLinkedListImproved<Integer> test = new MyLinkedListImproved<>();
         System.out.println(test);
         System.out.println(test.size());
         
@@ -240,15 +240,18 @@ public class MyLinkedList{
         System.out.println(test);
         System.out.println(test.size());
         
-        System.out.println("removed: 125" + test.remove(new Integer(125)));
+        System.out.println("removed: 125" + test.remove(125));
         System.out.println(test);
         System.out.println(test.size());
         
         
-    }*/
- public static void main(String[]args){
+    }
+}
+
+
+/*    public static void main(String[]args){
       MyLinkedList nums = new MyLinkedList();
-      LinkedList<Integer> nums2 = new LinkedList<>();
+      LinkedList<T> nums2 = new LinkedList<>();
       
       for(int i = 0; i < 2000; i++  ){
         int index = (int)(Math.random()*(1 + nums.size()));
@@ -408,11 +411,11 @@ public class MyLinkedList{
       //REMOVE BY VALUE (not index)
       nums.clear();
       for(int i = 0; i < 10; i++){
-        nums.add(0,Integer.valueOf(i));
+        nums.add(0,T.valueOf(i));
       }
-      if(nums.remove(Integer.valueOf(0)) && nums.remove(Integer.valueOf(1)) &&
-      nums.remove(Integer.valueOf(5)) && nums.remove(Integer.valueOf(3)) &&
-      nums.remove(Integer.valueOf(8))&& nums.remove(Integer.valueOf(9)))  {
+      if(nums.remove(T.valueOf(0)) && nums.remove(T.valueOf(1)) &&
+      nums.remove(T.valueOf(5)) && nums.remove(T.valueOf(3)) &&
+      nums.remove(T.valueOf(8))&& nums.remove(T.valueOf(9)))  {
         try{
           int[]result = { 7, 6, 4, 2};
           for(int i = 0; i < nums.size();i++ ){
@@ -429,7 +432,7 @@ public class MyLinkedList{
         System.out.println("FAIL to remove by value.");
         return;
       }
-      System.out.println("PASS remove by values (Integer, not int).");
+      System.out.println("PASS remove by values (T, not int).");
       
       nums.clear();
       long end,start = System.currentTimeMillis();
@@ -451,4 +454,4 @@ public class MyLinkedList{
     
     
     
-  }
+  }*/
