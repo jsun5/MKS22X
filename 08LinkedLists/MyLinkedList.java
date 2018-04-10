@@ -40,7 +40,7 @@ public class MyLinkedList{
         }
         else{
             tail = new Node(value, getNode(size()-1), null);
-            getNode(size()-1).setNext(tail);
+            tail.getPrev().setNext(tail);
             size++;
         }
         return true;
@@ -435,7 +435,7 @@ public class MyLinkedList{
       long end,start = System.currentTimeMillis();
       
       System.out.println("#Adding to 100000 values to the front, and 100000 to the end, should be fast.\n#If the next line doesn't print right away you have some issues.");
-      for(int i = 0; i < 100000; i++  ){
+      for(int i = 0; i < 10000; i++  ){
         nums.add(i);
         nums.add(nums.size(),i);
       }
