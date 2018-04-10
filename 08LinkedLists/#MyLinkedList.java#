@@ -1,11 +1,10 @@
-import java.util.*;
 import java.util.LinkedList;
  
-public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T>{
+public class MyLinkedList{
     private Node head,tail;
     private int size;
     
-    public MyLinkedListImproved(){
+    public MyLinkedList(){
         head = null;
         tail = null;
         size = 0;
@@ -27,7 +26,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         size = 0;
     }
     
-    public boolean add(T value){
+    public boolean add(Integer value){
         if(size() == 0){
             Node only = new Node(value);
             head = only;
@@ -41,14 +40,14 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
         else{
             tail = new Node(value, getNode(size()-1), null);
-            getNode(size()-1).setNext(tail);
-            size++;
+            tail.getPrev().setNext(tail);
+
         }
         return true;
     }
         
         
-    public T get(int index){
+    public int get(int index){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
@@ -62,7 +61,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         return current.getValue();
     }
 
-    public T set(int index, T value){
+    public int set(int index, Integer value){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
@@ -70,7 +69,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
             tail.setValue(value);
         }
         Node current = getNode(index);
-        T past = current.getValue();
+        int past = current.getValue();
         current.setValue(value);
         return past;
     }
@@ -83,7 +82,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         return ans + "]";
     }
         
-    public int indexOf(T value){
+    public int indexOf(Integer value){
         int i = 0;
         Node current = head;
         while(i < size()){
@@ -96,7 +95,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         return -1;
     }
     
-    public void add (int index, T value){
+    public void add (int index, Integer value){
         if(index < 0 || index > size()){
             throw new IndexOutOfBoundsException();
         }
@@ -119,11 +118,11 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
     }
     
-    public T remove(int index){
+    public int remove(int index){
         if(index < 0 || index >= size()){
             throw new IndexOutOfBoundsException();
         }
-        T past = null;
+        int past = 0;
         if(index == size()){
             if (size()==0){
                 past = head.getValue();
@@ -154,7 +153,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         return past;
     }
     
-    public boolean remove (T Value){
+    public boolean remove (Integer Value){
         int index = indexOf(Value);
         if (index != -1){
             remove(index);
@@ -166,15 +165,15 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
 
     private class Node{
         Node next,prev;
-        T data;
+        int data;
 
-        public Node(T d){
+        public Node(int d){
             data = d;
             next = null;
             prev = null;
         }
         
-        public Node(T d, Node p, Node n){
+        public Node(int d, Node p, Node n){
             data = d;
             next = n;
             prev = p;
@@ -188,7 +187,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
             return prev;
         }
 
-        private T getValue(){
+        private int getValue(){
             return data;
         }
 
@@ -200,7 +199,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
             prev = p;
         }
 
-        private void setValue(T d){
+        private void setValue(int d){
             data = d;
         }   
 
@@ -209,48 +208,47 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
     }
     
-    //public T Iterator()
-
-    private class Iterator_T implements Iterator<T>{
-	Node current;
-
-	public Iterator_T(){
-	    current = null;
-	}
-	
-	public boolean hasNext(){
-	    if (!current.getNext().equals(null)){
-		return true;
-	    }
-	    return false;
-	}
-   
-	public T next(){
-	    if(hasNext()){
-		current = current.getNext();
-	    }
-	    return current.getValue();
-	}
-    }
-    
-    public Iterator<T> iterator(){
-	return new Iterator_T();
-    }
-    
-    public static void main(String[]args){
- MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
-        n.add("fish");
- System.out.println(n);
-     MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
-        m.add(new Integer(0));
- System.out.println(m);
-    }
-}
-
-
 /*    public static void main(String[]args){
+        MyLinkedList test = new MyLinkedList();
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(5);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(3);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        test.add(7);
+        //test.clear();
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        System.out.println(test.get(0));
+        
+        System.out.println(test.set(0,125));
+        System.out.println(test);
+        System.out.println(test.indexOf(125));
+        
+        test.add(3,12);
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        System.out.println("removed: " + test.remove(3));
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        System.out.println("removed: 125" + test.remove(new Integer(125)));
+        System.out.println(test);
+        System.out.println(test.size());
+        
+        
+    }*/
+ public static void main(String[]args){
       MyLinkedList nums = new MyLinkedList();
-      LinkedList<T> nums2 = new LinkedList<>();
+      LinkedList<Integer> nums2 = new LinkedList<>();
       
       for(int i = 0; i < 2000; i++  ){
         int index = (int)(Math.random()*(1 + nums.size()));
@@ -410,11 +408,11 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
       //REMOVE BY VALUE (not index)
       nums.clear();
       for(int i = 0; i < 10; i++){
-        nums.add(0,T.valueOf(i));
+        nums.add(0,Integer.valueOf(i));
       }
-      if(nums.remove(T.valueOf(0)) && nums.remove(T.valueOf(1)) &&
-      nums.remove(T.valueOf(5)) && nums.remove(T.valueOf(3)) &&
-      nums.remove(T.valueOf(8))&& nums.remove(T.valueOf(9)))  {
+      if(nums.remove(Integer.valueOf(0)) && nums.remove(Integer.valueOf(1)) &&
+      nums.remove(Integer.valueOf(5)) && nums.remove(Integer.valueOf(3)) &&
+      nums.remove(Integer.valueOf(8))&& nums.remove(Integer.valueOf(9)))  {
         try{
           int[]result = { 7, 6, 4, 2};
           for(int i = 0; i < nums.size();i++ ){
@@ -431,13 +429,13 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         System.out.println("FAIL to remove by value.");
         return;
       }
-      System.out.println("PASS remove by values (T, not int).");
+      System.out.println("PASS remove by values (Integer, not int).");
       
       nums.clear();
       long end,start = System.currentTimeMillis();
       
       System.out.println("#Adding to 100000 values to the front, and 100000 to the end, should be fast.\n#If the next line doesn't print right away you have some issues.");
-      for(int i = 0; i < 100000; i++  ){
+      for(int i = 0; i < 10000; i++  ){
         nums.add(i);
         nums.add(nums.size(),i);
       }
@@ -453,4 +451,4 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     
     
     
-  }*/
+  }
