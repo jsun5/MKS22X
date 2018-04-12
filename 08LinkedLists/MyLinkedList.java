@@ -39,7 +39,7 @@ public class MyLinkedList{
             size++;
         }
         else{
-            tail = new Node(value, getNode(size()-1), null);
+            tail = new Node(value, tail, null);
             tail.getPrev().setNext(tail);
             size++;
         }
