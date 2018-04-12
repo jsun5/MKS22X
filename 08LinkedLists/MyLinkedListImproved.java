@@ -218,25 +218,26 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         public ListIterator_T (MyLinkedListImproved<T> d){
             data = d;
             current = data.head;
-            first = true;
+	    //    first = true;
         }
         
         public boolean hasNext(){
-            return !(current.getNext() == null);
+            return  current != null;
         }
    
         public T next(){
-           if(first){
-               first = false;
-               return current.getValue();
-           }
+	    //   if(first){
+	    //	    //       first = false;
+	    //          return current.getValue();
+	       //      }
+	    T val = current.getValue();
             if(hasNext()){
                 current = current.getNext();
             }
             else{
                 System.exit(0);
             }
-            return current.getValue();
+            return val;
         }
     }
     
@@ -244,6 +245,47 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     public Iterator<T> iterator(){
         return new ListIterator_T(this);
     }
+
+     public int max(){
+	 if (size() == 0){
+	     return -1;
+	 }
+	int largestIndex = 0;
+	int currentIndex = 0;
+	Node past = null;
+	Node current = head;
+	while(current != null){
+	    if(current.getValue().compareTo(past.getValue()) > 0){
+		largestIndex = currentIndex;
+	    }
+	    past = current;
+	    current = current.getNext();
+	    currentIndex++;
+	}
+	return largestIndex;
+     }
+
+     public int min(){
+	 if (size() == 0){
+	     return -1;
+	 }
+	 int smallestIndex = 0;
+	 int currentIndex = 0;
+	Node past = null;
+	Node current = head;
+	while(current != null){
+	    if(current.getValue().compareTo(past.getValue()) < 0){
+		smallestIndex = currentIndex;
+	    }
+	    past = current;
+	    current = current.getNext();
+	    currentIndex++;
+	}
+	return smallestIndex;
+     }
+	
+	
+	    
     
     public static void main(String[]args){
         MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
