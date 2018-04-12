@@ -209,41 +209,54 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
     }
     
-    //public T Iterator()
 
-    private class Iterator_T implements Iterator<T>{
-	Node current;
+    private class ListIterator_T implements Iterator<T>{
+        private Node current;
+        private MyLinkedListImproved<T> data;
+        private boolean first;
 
-	public Iterator_T(){
-	    current = null;
-	}
-	
-	public boolean hasNext(){
-	    if (!current.getNext().equals(null)){
-		return true;
-	    }
-	    return false;
-	}
+        public ListIterator_T (MyLinkedListImproved<T> d){
+            data = d;
+            current = data.head;
+            first = true;
+        }
+        
+        public boolean hasNext(){
+            return !(current.getNext() == null);
+        }
    
-	public T next(){
-	    if(hasNext()){
-		current = current.getNext();
-	    }
-	    return current.getValue();
-	}
+        public T next(){
+           if(first){
+               first = false;
+               return current.getValue();
+           }
+            if(hasNext()){
+                current = current.getNext();
+            }
+            else{
+                System.exit(0);
+            }
+            return current.getValue();
+        }
     }
     
+    
     public Iterator<T> iterator(){
-	return new Iterator_T();
+        return new ListIterator_T(this);
     }
     
     public static void main(String[]args){
- MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
+        MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
         n.add("fish");
- System.out.println(n);
-     MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
+        n.add("crab");
+        n.add("donkey");
+        System.out.println(n);
+        MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
         m.add(new Integer(0));
- System.out.println(m);
+        System.out.println(m);
+        for (String elem : n){
+            System.out.println("Elem: " + elem);
+        }
     }
 }
 
