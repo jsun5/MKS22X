@@ -24,6 +24,8 @@ public class MyLinkedList{
     
     public void clear(){
         size = 0;
+        head = null;
+        tail = null;
     }
     
     public boolean add(Integer value){
@@ -76,8 +78,10 @@ public class MyLinkedList{
     
     public String toString(){
         String ans = "[";
-        for (int i = 0; i < size(); i++){
-            ans += getNode(i).toString() + ",";
+        Node current = head;
+        while(current != null){
+            ans += current.getValue() + ",";
+            current = current.getNext();
         }
         return ans + "]";
     }
@@ -435,7 +439,7 @@ public class MyLinkedList{
       long end,start = System.currentTimeMillis();
       
       System.out.println("#Adding to 100000 values to the front, and 100000 to the end, should be fast.\n#If the next line doesn't print right away you have some issues.");
-      for(int i = 0; i < 10000; i++  ){
+      for(int i = 0; i < 100000; i++  ){
         nums.add(i);
         nums.add(nums.size(),i);
       }

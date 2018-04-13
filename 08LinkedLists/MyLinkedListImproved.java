@@ -25,6 +25,8 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     
     public void clear(){
         size = 0;
+        head = null;
+        tail = null;
     }
     
     public boolean add(T value){
@@ -77,8 +79,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     
     public String toString(){
         String ans = "[";
-        for (int i = 0; i < size(); i++){
-            ans += getNode(i).toString() + ",";
+        Node current = head;
+        while(current != null){
+            ans += current.getValue().toString() + ",";
+            current = current.getNext();
         }
         return ans + "]";
     }
@@ -283,6 +287,15 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
         return smallestIndex;
      }
+     
+     public void extend(MyLinkedListImproved<T> o){
+         //System.out.println("head o: " + o.head + " tail: " + tail);
+         tail.setNext(o.head);
+         o.head.setPrev(tail);
+         tail = o.tail;
+         //System.out.println(getNode(5).getNext().getValue());
+         o.clear();
+     }
 	
 	
 	    
@@ -305,6 +318,11 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         System.out.println(m);
         
         MyLinkedListImproved<Integer> p = new MyLinkedListImproved<>();
+        p.add(new Integer(252));
+        p.add(new Integer(1252));
+        p.add(new Integer(2523));
+        p.add(new Integer(64));
+                                
         
         for (String elem : n){
             System.out.println("Elem: " + elem);
@@ -318,6 +336,9 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         
         System.out.println("Max: at index: " + p.max());
         System.out.println("Min: at index: " + p.min());
+        
+       m.extend(p);
+       System.out.println("m: " + m + "p: " + p);
     }
 }
 
