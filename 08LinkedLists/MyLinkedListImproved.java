@@ -247,41 +247,41 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     }
 
      public int max(){
-	 if (size() == 0){
-	     return -1;
-	 }
-	int largestIndex = 0;
-	int currentIndex = 0;
-	Node past = null;
-	Node current = head;
-	while(current != null){
-	    if(current.getValue().compareTo(past.getValue()) > 0){
-		largestIndex = currentIndex;
-	    }
-	    past = current;
-	    current = current.getNext();
-	    currentIndex++;
-	}
-	return largestIndex;
+        if (size() == 0){
+            return -1;
+        }
+        int biggestIndex = 0;
+        int currentIndex = 0;
+        T big = head.getValue();
+        Node current = head;
+        while(current != null){
+            if(current.getValue().compareTo(big) > 0){
+                biggestIndex = currentIndex;
+                big = current.getValue();
+            }
+            current = current.getNext();
+            currentIndex++;
+        }
+        return biggestIndex;
      }
 
      public int min(){
-	 if (size() == 0){
-	     return -1;
-	 }
-	 int smallestIndex = 0;
-	 int currentIndex = 0;
-	Node past = null;
-	Node current = head;
-	while(current != null){
-	    if(current.getValue().compareTo(past.getValue()) < 0){
-		smallestIndex = currentIndex;
-	    }
-	    past = current;
-	    current = current.getNext();
-	    currentIndex++;
-	}
-	return smallestIndex;
+        if (size() == 0){
+            return -1;
+        }
+        int smallestIndex = 0;
+        int currentIndex = 0;
+        T small = head.getValue();
+        Node current = head;
+        while(current != null){
+            if(current.getValue().compareTo(small) < 0){
+                smallestIndex = currentIndex;
+                small = current.getValue();
+            }
+            current = current.getNext();
+            currentIndex++;
+        }
+        return smallestIndex;
      }
 	
 	
@@ -289,16 +289,35 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
     
     public static void main(String[]args){
         MyLinkedListImproved<String> n = new MyLinkedListImproved<>();
+        n.add("apple");
         n.add("fish");
         n.add("crab");
         n.add("donkey");
         System.out.println(n);
+        
         MyLinkedListImproved<Integer> m = new MyLinkedListImproved<>();
-        m.add(new Integer(0));
+        m.add(new Integer(5));
+        m.add(new Integer(3));
+        m.add(new Integer(2));
+        m.add(new Integer(12));
+        m.add(new Integer(2));
+        m.add(new Integer(3));
         System.out.println(m);
+        
+        MyLinkedListImproved<Integer> p = new MyLinkedListImproved<>();
+        
         for (String elem : n){
             System.out.println("Elem: " + elem);
         }
+        
+        System.out.println("Max: " + n.getNode(n.max()).getValue() + " at index: " + n.max());
+        System.out.println("Min: " + n.getNode(n.min()).getValue() + " at index: " + n.min());
+        
+        System.out.println("Max: " + m.getNode(m.max()).getValue() + " at index: " + m.max());
+        System.out.println("Min: " + m.getNode(m.min()).getValue() + " at index: " + m.min());
+        
+        System.out.println("Max: at index: " + p.max());
+        System.out.println("Min: at index: " + p.min());
     }
 }
 
