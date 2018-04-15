@@ -268,6 +268,10 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         }
         return biggestIndex;
      }
+     
+     public T getMax(){
+         return getNode(max()).getValue();
+     }
 
      public int min(){
         if (size() == 0){
