@@ -294,6 +294,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
          o.head.setPrev(tail);
          tail = o.tail;
          //System.out.println(getNode(5).getNext().getValue());
+         size += o.size();
          o.clear();
      }
 	
@@ -338,7 +339,7 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
         System.out.println("Min: at index: " + p.min());
         
        m.extend(p);
-       System.out.println("m: " + m + "p: " + p);
+       System.out.println("m: " + m + m.size() + "p: " + p + p.size());
     }
 }
 
