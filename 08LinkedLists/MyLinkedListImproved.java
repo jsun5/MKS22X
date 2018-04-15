@@ -290,12 +290,22 @@ public class MyLinkedListImproved<T extends Comparable<T>> implements Iterable<T
      
      public void extend(MyLinkedListImproved<T> o){
          //System.out.println("head o: " + o.head + " tail: " + tail);
-         tail.setNext(o.head);
-         o.head.setPrev(tail);
-         tail = o.tail;
-         //System.out.println(getNode(5).getNext().getValue());
-         size += o.size();
-         o.clear();
+        if(o.size() > 0){
+            if(size()>0){
+                tail.setNext(o.head);
+                o.head.setPrev(tail);
+                tail = o.tail;
+                //System.out.println(getNode(5).getNext().getValue());
+                size += o.size();
+                o.clear();
+            }
+            else{
+                head = o.head;
+                tail = o.tail;
+                size = o.size;
+                o.clear();
+            }
+        }
      }
 	
 	
