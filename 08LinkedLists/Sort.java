@@ -3,27 +3,53 @@ import java.util.*;
 public class Sort{
     
     public static void radixsort(MyLinkedListImproved<Integer> data){
+        if (data.size() == 0){
+            return;
+        }
         
         MyLinkedListImproved<Integer> list = data;
         @SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] buckets = new MyLinkedListImproved[10];
+        @SuppressWarnings("unchecked") MyLinkedListImproved<Integer>[] negBuckets = new MyLinkedListImproved[10];
         
         for(int i = 0; i < 10; i++){
             buckets[i] = new MyLinkedListImproved<>();
         }
         
+        for(int i = 0; i < 10; i++){
+            negBuckets[i] = new MyLinkedListImproved<>();
+        }
+        
+        int cap = 0;
         int digit = 10;
-        int cap = getCap(list.getMax());
+        
+        int Pcap = getCap(list.getMax());
 //        System.out.println("cap: " + cap);
+        int Ncap = getCap(list.getMin());
+        if (Pcap > Ncap){
+            cap = Pcap;
+        }
+        else{
+            cap = Ncap;
+        }
         
         while(cap >= 0){
             
             for(Integer num : list){
-                buckets[num % digit / (digit / 10)].add(num);
+                if (num > 0){
+                    buckets[num % digit / (digit / 10)].add(num);
+                }
+                else{
+                    negBuckets[num % digit / (digit / 10) + 9].add(num);
+                }
             }
         
 //            print(buckets);
             list.clear();
         
+            for(int i = 0; i < 10; i ++){
+                list.extend(negBuckets[i]);
+            }
+            
             for(int i = 0; i < 10; i ++){
                 list.extend(buckets[i]);
             }
@@ -44,6 +70,7 @@ public class Sort{
     }
     
     public static int getCap(Integer n){
+        n = Math.abs(n);
         int cap = 0;
         while (n >= 10){
             n = n/10;
@@ -90,17 +117,17 @@ public static void main(String[] args) {
       data.add(temp);
       correctData[i] = temp;
     }
-    System.out.println(data);
+//    System.out.println(data);
 
     //Sorts data and times the sort
     long end,start = System.currentTimeMillis();
     radixsort(data);
-    System.out.println(data);
+//    System.out.println(data);
     end = System.currentTimeMillis();
 
     //Sorts the array
     Arrays.sort(correctData);
-    System.out.println("CORRECT: "+Arrays.toString(correctData));
+//    System.out.println("CORRECT: "+Arrays.toString(correctData));
     System.out.println("Sort completed in " + (end - start) + " seconds");
 
     //Checks if data is properly sorted
@@ -122,30 +149,25 @@ public static void main(String[] args) {
       System.out.println(data);
     }
     System.out.println("\n");
-/*
-/*
+
     //-----------SORTING NEGATIVES-----------
     System.out.println("TESTING ON NEGATIVE INTEGERS ONLY:");
     data.clear();
-    correctData = new int[1000];
-
+    correctData = new int[10000];
     //Create MyLinkedListImproved and array with random integers
-    for(int i = 0; i < 1000; i++){
-      int temp = (int)(Math.random() * 1000);
+    for(int i = 0; i < 10000; i++){
+      int temp = (int)(Math.random() * 10000);
       temp *= -1;
       data.add(temp);
       correctData[i] = temp;
     }
-
     //Sorts data and times the sort
     start = System.currentTimeMillis();
     radixsort(data);
     end = System.currentTimeMillis();
-
     //Sorts the array
     Arrays.sort(correctData);
     System.out.println("Sort completed in " + (end - start) + " seconds");
-
     //Checks if data is properly sorted
     hasError = false;
     index = 0;
@@ -157,7 +179,6 @@ public static void main(String[] args) {
       }
       index++;
     }
-
     if(!(hasError)){
       System.out.println("Your LinkedList with all negative numbers is properly sorted.");
     }
@@ -165,32 +186,28 @@ public static void main(String[] args) {
       System.out.println(data);
     }
     System.out.println("\n");
-
-
+    
+    
     //-----------SORTING POSITIVES AND NEGATIVES-----------
     System.out.println("TESTING ON POSITIVE AND NEGATIVE INTEGERS:");
     data.clear();
-    correctData = new int[1000];
-
+    correctData = new int[10000];
     //Create MyLinkedListImproved and array with random integers
-    for(int i = 0; i < 1000; i++){
-      int temp = (int)(Math.random() * 1000);
-      if((int)(Math.random() * 1000) % 2 == 0){
+    for(int i = 0; i < 10000; i++){
+      int temp = (int)(Math.random() * 10000);
+      if((int)(Math.random() * 10000) % 2 == 0){
         temp *= -1;
       }
       data.add(temp);
       correctData[i] = temp;
     }
-
     //Sorts data and times the sort
     start = System.currentTimeMillis();
     radixsort(data);
     end = System.currentTimeMillis();
-
     //Sorts the array
     Arrays.sort(correctData);
     System.out.println("Sort completed in " + (end - start) + " seconds");
-
     //Checks if data is properly sorted
     hasError = false;
     index = 0;
@@ -202,7 +219,6 @@ public static void main(String[] args) {
       }
       index++;
     }
-
     if(!(hasError)){
       System.out.println("Your LinkedList with positive and negative integers is properly sorted.");
     }
@@ -210,21 +226,16 @@ public static void main(String[] args) {
       System.out.println(data);
     }
     System.out.println("\n");
-
-
     //-----------SORTING EMPTY LISTS-----------
     System.out.println("SORTING ON EMPTY LISTS");
     data.clear();
     correctData = new int[0];
-
     start = System.currentTimeMillis();
     radixsort(data);
     end = System.currentTimeMillis();
-
     //Sorts the array
     Arrays.sort(correctData);
     System.out.println("Sort completed in " + (end - start) + " seconds");
-
     //Checks if data is properly sorted
     hasError = false;
     index = 0;
@@ -236,7 +247,6 @@ public static void main(String[] args) {
       }
       index++;
     }
-
     if(!(hasError)){
       System.out.println("Your empty LinkedList is properly sorted.");
     }
@@ -244,25 +254,19 @@ public static void main(String[] args) {
       System.out.println(data);
     }
     System.out.println("\n");
-
-
     //-----------SORTING POSITIVE ONE-ELEMENT LISTS-----------
     System.out.println("SORTING POSITIVE ONE-ELEMENT LISTS");
     data.clear();
     correctData = new int[1];
-
     int temp = (int)(Math.random() * 1000);
     data.add(temp);
     correctData[0] = temp;
-
     start = System.currentTimeMillis();
     radixsort(data);
     end = System.currentTimeMillis();
-
     //Sorts the array
     Arrays.sort(correctData);
     System.out.println("Sort completed in " + (end - start) + " seconds");
-
     //Checks if data is properly sorted
     hasError = false;
     index = 0;
@@ -274,7 +278,6 @@ public static void main(String[] args) {
       }
       index++;
     }
-
     if(!(hasError)){
       System.out.println("Your LinkedList with one positive element is properly sorted.");
     }
@@ -282,25 +285,19 @@ public static void main(String[] args) {
       System.out.println(data);
     }
     System.out.println("\n");
-
-
     //-----------SORTING NEGATIVE ONE-ELEMENT LISTS-----------
     System.out.println("SORTING NEGATIVE ONE-ELEMENT LISTS");
     data.clear();
     correctData = new int[1];
-
     temp = (int)(Math.random() * 1000) * -1;
     data.add(temp);
     correctData[0] = temp;
-
     start = System.currentTimeMillis();
     radixsort(data);
     end = System.currentTimeMillis();
-
     //Sorts the array
     Arrays.sort(correctData);
     System.out.println("Sort completed in " + (end - start) + " seconds");
-
     //Checks if data is properly sorted
     hasError = false;
     index = 0;
@@ -312,12 +309,11 @@ public static void main(String[] args) {
       }
       index++;
     }
-
     if(!(hasError)){
       System.out.println("Your LinkedList with one negative element is properly sorted.");
     }
     else{
       System.out.println(data);
-    }*/
+    }
   }
 }
