@@ -66,7 +66,7 @@ public class MyDeque<T>{
         T[] temp = (T[])new Object[data.length * 2];
 
         for(int i = 0; i < data.length; i++){
-            temp[i] = data[(front + i)/ data.length];
+            temp[i] = data[(front + i)% data.length];
         }
         front = 0;
         back = data.length -1;
@@ -103,9 +103,9 @@ public class MyDeque<T>{
         return value;
     }
     
-    public String toString(){
+    /*public String toString(){
         return Arrays.toString(data);
-    }
+    }*/
     
     /*public static void main(String[]args){
         MyDeque<Integer> test= new MyDeque<>();
@@ -117,6 +117,24 @@ public class MyDeque<T>{
         }
         System.out.println(test);
     }*/
+public String toString(){
+    String ans = "[";
+    if(front < back){
+      for (int i = front; i <= back; i++){
+        ans += data[i] + " , ";
+      }
+    }
+    else{
+      for(int i = front; i < data.length; i++){
+        ans += data[i] + ", ";
+      }
+      for(int i = 0; i <= back; i++){
+        ans += data[i] + ", ";
+      }
+    }
+    ans = ans.substring(0, ans.length() - 2) + "]";
+    return ans;
+  }
       public static void main(String[] args) {
     MyDeque<String> a = new MyDeque<>(), a1 = new MyDeque<>();
     ArrayList<String> b = new ArrayList<>();
@@ -133,8 +151,9 @@ public class MyDeque<T>{
         a.addLast("" + temp);
         a1.addLast("" + temp);
         b.add("" + temp);
-      }
+      }//System.out.println("a: " + a + "     b: " + b);
     }
+    
 
     int index = 0;
     boolean hasError = false;
