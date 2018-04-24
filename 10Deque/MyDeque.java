@@ -6,8 +6,8 @@ public class MyDeque<T>{
     
     @SuppressWarnings("unchecked")
     public MyDeque(){
-        front = 1;
-        back = 0;
+        front = 0;
+        back = -1;
         size = 0;
         data = (T[])new Object[10];
     }
@@ -17,8 +17,8 @@ public class MyDeque<T>{
         if(initialCapacity < 0){
             throw new IllegalArgumentException();
         }
-        front = 1;
-        back = 0;
+        front = 0;
+        back = -1;
         size = 0;
         data = (T[])new Object[initialCapacity];
     }
@@ -34,10 +34,12 @@ public class MyDeque<T>{
         if(size() == data.length){
             resize();
         }
-        int index = (front + data.length - 1) % data.length ;
-        if(data[index] == null){
-            data[index] = elem;
-            front = index;
+        if(front == 0){
+            front = data.length;
+        }
+        front --;
+        if(data[front] == null){
+            data[front] = elem;
             size++;
         }
     }
@@ -49,23 +51,25 @@ public class MyDeque<T>{
         if(size()==data.length) {
             resize();
         }
-        int index = (back + 1) % size();
-        if (data[index] == null){
-            data[index] = elem;
-            back = index;
+        if(back == size()){
+            back = -1;
+        }
+        back++;
+        if (data[back] == null){
+            data[back] = elem;
+            size++;
         }
     }
     
     @SuppressWarnings("unchecked")
     public void resize(){
-        T[] temp = (T[])new Object[size() * 2];
-        int counter = 0;
-        int i;
-        for(i = front; i < size() + back; i++){
-            temp[counter] = data[i];
+        T[] temp = (T[])new Object[data.length * 2];
+
+        for(int i = 0; i < data.length; i++){
+            temp[i] = data[(front + i)/ data.length];
         }
         front = 0;
-        back = counter;
+        back = data.length -1;
         data = temp;
     }
     
@@ -86,13 +90,15 @@ public class MyDeque<T>{
     public T removeFirst(){
         T value = getFirst();
         data[front] = null;
-        front++;
+        front = (front + 1) % data.length;
+        size--;
         return value;
     }
     
     public T removeLast(){
         T value = getLast();
         data[back] = null;
+        back = (back - 1 + data.length) % data.length;
         back--;
         return value;
     }
@@ -101,7 +107,7 @@ public class MyDeque<T>{
         return Arrays.toString(data);
     }
     
-    public static void main(String[]args){
+    /*public static void main(String[]args){
         MyDeque<Integer> test= new MyDeque<>();
         System.out.println(test);
         for(int i = 0; i < 15; i++){
@@ -110,7 +116,53 @@ public class MyDeque<T>{
             System.out.println(test);
         }
         System.out.println(test);
+    }*/
+      public static void main(String[] args) {
+    MyDeque<String> a = new MyDeque<>(), a1 = new MyDeque<>();
+    ArrayList<String> b = new ArrayList<>();
+
+    int size = Integer.parseInt(args[0]);
+    for(int i = 0; i < size; i++){
+      int temp = (int)(Math.random() * 1000);
+      if(temp % 2 == 0){
+        a.addFirst("" + temp);
+        a1.addFirst("" + temp);
+        b.add(0, "" + temp);
+      }
+      else{
+        a.addLast("" + temp);
+        a1.addLast("" + temp);
+        b.add("" + temp);
+      }
     }
+
+    int index = 0;
+    boolean hasError = false;
+    String errorEvaluation = "Errors found at these indices: ";
+    for (String x : b){
+      if (!(x.equals(a.getFirst()))){
+        System.out.println("The getFirst() function is incorrect at index " + index);
+        hasError = true;
+      }
+      if (!(x.equals(a.removeFirst()))){
+        System.out.println("There is an error at index " + index);
+        errorEvaluation += index + ", ";
+        hasError = true;
+      }
+      index++;
+    }
+
+
+    if(hasError){
+      errorEvaluation = errorEvaluation.substring(0, errorEvaluation.length() - 2);
+      System.out.println(errorEvaluation);
+      System.out.println("MyDeque: " + a1);
+      System.out.println("Actual Deque: " + b);
+    }
+    else{
+      System.out.println("Your deque is bug-free!");
+    }
+  }
 }
             
         
