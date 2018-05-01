@@ -18,16 +18,42 @@ public class MyHeap{
     
     public void add(String s){
         if(size() >= heap.length){
-         //   resize();
+            resize();
         }
         heap[size()] = s;
-        int index = (size() - 1)/2;
-        while(heap[index].compareTo(s) < 0){
-            swap(index, (index - 1)/2);
-            index = (index - 1)/2;
-        }
+        //int index = (size() - 1)/2;
+        adder(s, size());
         size++;
+        System.out.println("add: " + s + "size: " + size());
+        System.out.println(toString()); 
         
+    }
+    
+    public void adder(String s, int index){
+        int next = (index - 1)/2;
+        if(s.compareTo(heap[next]) > 0){
+            pushUp(index);
+            adder(s,next);
+        }
+    }
+    
+    public String remove(){
+        String ans = heap[0];
+        heap[0] = heap[size()-1];
+        remover(peek(),0);
+        heap[size()-1] = null;
+        size--;
+        System.out.println("subtract: " + peek() + "size: " + size());
+        System.out.println(toString()); 
+        return ans;
+    }
+    
+    public void remover(String s, int index){
+        int next = (index + 1)/ 2 * 2;
+        if(s.compareTo(heap[next]) < 0){
+            pushDown(index);
+            remover(s, next);
+        }
     }
     
     private void swap(int prev, int next){
@@ -37,9 +63,11 @@ public class MyHeap{
     }
     
     private void pushUp(int i){
-        if(heap[i].compareTo(getTree(i)) < 0){
             swap(i, (i-1)/2);
-        }
+    }
+    
+    private void pushDown(int i){
+        swap(i, (i + 1)/ 2 * 2);
     }
     
     private String getTree(int n){
@@ -60,13 +88,16 @@ public class MyHeap{
         return heap[n + n + 2];
     }
    
-    
-    public String remove(){
-        return "";
-    }
+   public void resize(){
+       String[] temp = new String[heap.length * 2];
+       for(int i = 0; i < size(); i++){
+           temp[i] = heap[i];
+       }
+       heap = temp;
+   }
     
     public String peek(){
-        return "";
+        return heap[0];
     }
     
     public int size(){
@@ -81,6 +112,25 @@ public class MyHeap{
         MyHeap test = new MyHeap();
         test.add("0");
         test.add("1");
+                test.add("5");
+        test.add("8");
+                test.add("2");
+        test.add("1");  
+        test.add("0");
+        test.add("1");
+                test.add("5");
+        test.add("8");
+                test.add("2");
+        test.add("1");  
+        test.add("0");
+        test.add("1");
+                test.add("5");
+        test.add("8");
+                test.add("2");
+        test.add("1");  
+        for(int i = 10; i > 0; i--){
+        test.remove();
+        }
         System.out.println(test);
     }
 }
