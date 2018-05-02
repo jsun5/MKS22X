@@ -49,10 +49,16 @@ public class MyHeap{
     }
     
     public void remover(String s, int index){
-        int next = (index + 1)/ 2 * 2;
-        if(s.compareTo(heap[next]) < 0){
-            pushDown(index);
-            remover(s, next);
+        int next = index*2;
+
+        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0){
+            pushDownRight(index);
+            remover(s, next + 2);
+        }
+           else if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0){
+            pushDownLeft(index);
+            remover(s, next + 1);
+        
         }
     }
     
@@ -66,8 +72,12 @@ public class MyHeap{
             swap(i, (i-1)/2);
     }
     
-    private void pushDown(int i){
-        swap(i, (i + 1)/ 2 * 2);
+    private void pushDownLeft(int i){
+        swap(i, 2*i + 1);
+    }
+    
+    private void pushDownRight(int i){
+        swap(i, 2*i + 2);
     }
     
     private String getTree(int n){
