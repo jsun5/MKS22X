@@ -1,13 +1,14 @@
 import java.util.*;
 
-public class MyHeap{
+public class MyHeap<T extends Comparable<T>>{
     private int size;
-    private String[] heap;
+    private T[] heap;
     private boolean isMax;
     
+    @SuppressWarnings("unchecked")
     public MyHeap(){
         size = 0;
-        heap = new String[10];
+        heap = (T[])new Comparable[10];
         isMax = true;
     }
     
@@ -16,7 +17,7 @@ public class MyHeap{
         isMax = Max;
     }
     
-    public void add(String s){
+    public void add(T s){
         if(size() >= heap.length){
             resize();
         }
@@ -26,19 +27,18 @@ public class MyHeap{
         size++;
         System.out.println("add: " + s + "size: " + size());
         System.out.println(toString()); 
-        
     }
     
-    public void adder(String s, int index){
+    public void adder(T s, int index){
         int next = (index - 1)/2;
-        if(s.compareTo(heap[next]) > 0){
+        if(s.compareTo(heap[next]) > 0 && isMax || s.compareTo(heap[next]) < 0 && !isMax){
             pushUp(index);
             adder(s,next);
         }
     }
     
-    public String remove(){
-        String ans = heap[0];
+    public T remove(){
+        T ans = heap[0];
         heap[0] = heap[size()-1];
         remover(peek(),0);
         heap[size()-1] = null;
@@ -48,14 +48,16 @@ public class MyHeap{
         return ans;
     }
     
-    public void remover(String s, int index){
+    public void remover(T s, int index){
         int next = index*2;
 
-        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0){
+        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0 && isMax ||
+           next + 2 < size() && s.compareTo(heap[next + 2]) > 0 && !isMax ){
             pushDownRight(index);
             remover(s, next + 2);
         }
-           else if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0){
+           else if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0 && isMax ||
+                   next + 1 < size() && s.compareTo(heap[next + 1]) > 0 && !isMax){
             pushDownLeft(index);
             remover(s, next + 1);
         
@@ -63,7 +65,7 @@ public class MyHeap{
     }
     
     private void swap(int prev, int next){
-        String temp = heap[prev];
+        T temp = heap[prev];
         heap[prev] = heap[next];
         heap[next] = temp;
     }
@@ -80,33 +82,34 @@ public class MyHeap{
         swap(i, 2*i + 2);
     }
     
-    private String getTree(int n){
+    private T getTree(int n){
         return heap[(n - 1) /2];
     }
     
-    private String getLeft(int n){
+    private T getLeft(int n){
         if(n + n + 1 > size()){
            // return false;
         }
         return heap[n + n + 1];
     }
     
-    private String getRight(int n){
+    private T getRight(int n){
         if(n + n + 2 > size()){
           //      return false;
         }
         return heap[n + n + 2];
     }
    
+   @SuppressWarnings("unchecked")
    public void resize(){
-       String[] temp = new String[heap.length * 2];
+       T[] temp = (T[])new Comparable[heap.length * 2];
        for(int i = 0; i < size(); i++){
            temp[i] = heap[i];
        }
        heap = temp;
    }
     
-    public String peek(){
+    public T peek(){
         return heap[0];
     }
     
@@ -119,7 +122,7 @@ public class MyHeap{
     }
     
     public static void main(String[]args){
-        MyHeap test = new MyHeap();
+        MyHeap<String> test = new MyHeap<>(true);
         test.add("0");
         test.add("1");
                 test.add("5");
