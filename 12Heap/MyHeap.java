@@ -79,9 +79,11 @@ public class MyHeap{
     
     public static void main(String[]args){
         MyHeap test = new MyHeap();
-        test.add("0");
-        test.add("1");
-        System.out.println(test);
+        test.add("6");
+        test.add("3");
+	test.add("4");
+	        test.add("8");
+	   System.out.println(test);
     }
 }
             
