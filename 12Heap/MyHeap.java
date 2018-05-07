@@ -31,7 +31,7 @@ public class MyHeap<T extends Comparable<T>>{
     
     public void adder(T s, int index){
         int next = (index - 1)/2;
-        if(s.compareTo(heap[next]) > 0 && isMax || s.compareTo(heap[next]) < 0 && !isMax){
+        if((s.compareTo(heap[next]) > 0 && isMax) || (s.compareTo(heap[next]) < 0 && !isMax)){
             pushUp(index);
             adder(s,next);
         }
@@ -50,16 +50,15 @@ public class MyHeap<T extends Comparable<T>>{
     
     public void remover(T s, int index){
         int next = index*2;
-
-        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0 && isMax ||
-           next + 2 < size() && s.compareTo(heap[next + 2]) > 0 && !isMax ){
-            pushDownRight(index);
-            remover(s, next + 2);
-        }
-           else if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0 && isMax ||
-                   next + 1 < size() && s.compareTo(heap[next + 1]) > 0 && !isMax){
+        if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0 && isMax && heap[next+1].compareTo(heap[next+2]) > 0||
+           next + 1 < size() && s.compareTo(heap[next + 1]) > 0 && !isMax && heap[next+1].compareTo(heap[next+2])<0){
             pushDownLeft(index);
             remover(s, next + 1);
+        }
+           else if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0 && isMax && heap[next+2].compareTo(heap[next+1]) > 0 ||
+                   next + 2 < size() && s.compareTo(heap[next + 2]) > 0 && !isMax && heap[next+2].compareTo(heap[next+1]) < 0){
+            pushDownRight(index);
+            remover(s, next + 2);
         
         }
     }
@@ -121,7 +120,7 @@ public class MyHeap<T extends Comparable<T>>{
         return Arrays.toString(heap);
     }
     
-    public static void main(String[]args){
+/*    public static void main(String[]args){
         MyHeap<String> test = new MyHeap<>(true);
         test.add("0");
         test.add("1");
@@ -145,6 +144,23 @@ public class MyHeap<T extends Comparable<T>>{
         test.remove();
         }
         System.out.println(test);
+    }*/
+    
+        public static void main(String[] args){
+	MyHeap<Integer> heap = new MyHeap<>();
+	for(int i = 0; i < 15; i++){
+	    heap.add((int)(i*Math.random()*10));
+	}
+	System.out.println(heap);
+	heap.remove();
+	System.out.println(heap);
+
+	heap.remove();
+	System.out.println(heap);
+
+	heap.remove();
+
+	System.out.println(heap);
     }
 }
             
