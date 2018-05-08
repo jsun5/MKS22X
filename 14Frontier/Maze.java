@@ -14,8 +14,21 @@ public class Maze{
   YOU MUST COMPLETE THIS METHOD!!!
   */
   public Location[] getNeighbors(Location L){
+      int x = L.getX();
+      int y = L.getY();
       Location[] list = new Location[4];
-      if(
+      if(x + 1 < maze[0].length && maze[y][x+1] == ' '){
+          list[0] = new Location(x+1, y, L);
+      }
+      if(y + 1 < maze.length && maze[y+1][x] == ' '){
+          list[1] = new Location(x, y+1, L);
+      }
+      if(x - 1 > 0 && maze[y][x-1] == ' '){
+          list[2] = new Location(x-1, y, L);
+      }
+      if(y - 1 > 0 && maze[y-1][x] == ' '){
+          list[3] = new Location(x, y-1, L);
+      }
   }
 
   public Location getStart(){
