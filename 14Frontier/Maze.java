@@ -29,6 +29,7 @@ public class Maze{
       if(y - 1 > 0 && maze[y-1][x] == ' '){
           list[3] = new Location(x, y-1, L);
       }
+      return list;
   }
 
   public Location getStart(){
