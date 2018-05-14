@@ -6,7 +6,7 @@ public class FrontierStack implements Frontier{
     }
     
     public void add(Location n){
-        locations.addFirst(n);
+        locations.addLast(n);
     }
     
     public boolean hasNext(){

@@ -13,7 +13,7 @@ public class Maze{
   YOU MUST COMPLETE THIS METHOD!!!
   YOU MUST COMPLETE THIS METHOD!!!
   */
-  public Location[] getNeighbors(Location L){
+    public Location[] getNeighbors(Location L){
       int x = L.getX();
       int y = L.getY();
       Location[] list = new Location[4];

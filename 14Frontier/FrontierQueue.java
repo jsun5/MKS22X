@@ -2,7 +2,7 @@ public class FrontierQueue implements Frontier{
     private MyDeque<Location> locations = new MyDeque<>();
     
     public Location next(){
-        return locations.removeLast();
+        return locations.removeFirst();
     }
     
     public void add(Location n){
