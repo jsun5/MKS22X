@@ -13,7 +13,7 @@ public class Maze{
   YOU MUST COMPLETE THIS METHOD!!!
   YOU MUST COMPLETE THIS METHOD!!!
   */
-    public Location[] getNeighbors(Location L){
+/*    public Location[] getNeighbors(Location L){
       int x = L.getX();
       int y = L.getY();
       Location[] list = new Location[4];
@@ -30,14 +30,33 @@ public class Maze{
           list[3] = new Location(x, y-1, L);
       }
       return list;
-  }
+  }*/
+  
+  public Location[] getNeighbors(Location L, boolean isAStar){
+        Location[] list = new Location[4];
+        int[][]directions = {{1,0}, {0,-1}, {-1,0}, {0,1}};
+        for(int i = 0; i < 4; i++){
+            for(int[]dir : directions){
+                int x = L.getX() + dir[0];
+                int y = L.getY() + dir[1];
+                if(x >= 0 && x <= maze.length-1 && y >= 0 && y <= maze[0].length-1 &&(maze[x][y] == ' ' ||maze[x][y] == 'E')) {
+                    int priority =  Math.abs(x - end.getX()) + Math.abs(y - end.getY());
+                    if(isAStar){
+                        priority += L.getDistance();
+                    }
+                    list[i] = new Location(L.getX()+dir[0], L.getY()+dir[1], L, priority, priority); //poss issue
+                }
+            }
 
+        }	return list;
+  }
   public Location getStart(){
     return start;
   }
   public Location getEnd(){
     return end;
   }
+ 
 
 
   private static String go(int x,int y){

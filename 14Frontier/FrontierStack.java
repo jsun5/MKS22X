@@ -2,11 +2,11 @@ public class FrontierStack implements Frontier{
     private MyDeque<Location> locations = new MyDeque<>();
     
     public Location next(){
-        return locations.removeLast();
+        return locations.removeFirst();
     }
     
     public void add(Location n){
-        locations.addLast(n);
+        locations.addFirst(n);
     }
     
     public boolean hasNext(){

@@ -1,6 +1,8 @@
 public class MazeSolver{
   private Maze maze;
   private Frontier frontier;
+  private boolean animate;
+  private boolean isAStar = false;
 
   public MazeSolver(String mazeText){
     maze = new Maze(mazeText);
@@ -19,24 +21,32 @@ public class MazeSolver{
         if(mode == 1){
             frontier = new FrontierStack();
         }
-        boolean done = false;
-        frontier.add(maze.getStart());
-        while (!done && frontier.hasNext()){
-            Location next = frontier.next();
-            if (next.equals(maze.getEnd())){
-                done = true;
-            }
-            else{
-                Location[] loc = maze.getNeighbors(next);
-                for(int i = 0; i < 4; i++){
-                    if (loc[i] != null){
-                        frontier.add(loc[i]);
-                    }    
-                }
-            
-            }
+        if(mode == 2){
+            frontier = new FrontierPriorityQueue();
         }
-        return done;
+        if(mode == 3){
+            frontier = new FrontierPriorityQueue();
+            isAStar = true;
+        }
+        frontier.add(maze.getStart());
+        while (frontier.hasNext()){
+            Location next = frontier.next();
+            Location[] valid = maze.getNeighbors(next,isAStar);
+            if (!next.equals(maze.getStart())){
+                maze.set(next.getX(), next.getY(), '.');
+            }
+            for(Location L : valid) {
+                if(L != null && L.equals(maze.getEnd())){
+                    return true;
+                }
+                else{
+                    frontier.add(L);
+                    maze.set(L.getX(),L.getY(),'?');
+                }
+                
+            }
+        }return false;
+    }
     //initialize your frontier
     //while there is stuff in the frontier:
     //  get the next location
@@ -44,7 +54,7 @@ public class MazeSolver{
     //  check if any locations are the end, if you found the end just return true!
     //  add all the locations to the frontier
     //when there are no more values in the frontier return false
-  }
+  
 
   public String toString(){
     return maze.toString();
