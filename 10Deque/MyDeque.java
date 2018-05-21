@@ -7,7 +7,7 @@ public class MyDeque<T>{
     @SuppressWarnings("unchecked")
     public MyDeque(){
         front = 0;
-        back = -1;
+        back = 0;
         size = 0;
         data = (T[])new Object[10];
     }
@@ -18,7 +18,7 @@ public class MyDeque<T>{
             throw new IllegalArgumentException();
         }
         front = 0;
-        back = -1;
+        back = 0;
         size = 0;
         data = (T[])new Object[initialCapacity];
     }
@@ -27,6 +27,7 @@ public class MyDeque<T>{
         return size;
     }
     
+    //Credit to Robin Han for helping me w/ add and remove
     public void addFirst(T elem){
         if (elem == null){
             throw new NullPointerException();
@@ -34,14 +35,18 @@ public class MyDeque<T>{
         if(size() == data.length){
             resize();
         }
-        if(front == 0){
-            front = data.length;
-        }
-        front --;
-        if(data[front] == null){
+        if(size()==0){
             data[front] = elem;
-            size++;
         }
+        else if(front == 0){
+            data[data.length - 1] = elem;
+            front = data.length - 1;
+        }
+        else{
+            data[front-1] = elem;
+            front-=1;
+        }
+        size++;
     }
     
     public void addLast(T elem){
@@ -51,26 +56,44 @@ public class MyDeque<T>{
         if(size()==data.length) {
             resize();
         }
-        if(back == size()){
-            back = -1;
+        if(size()==0){
+            data[back]=elem;
         }
-        back++;
-        if (data[back] == null){
-            data[back] = elem;
-            size++;
+        else if(back == data.length - 1){
+            data[0]=elem;
+            back = 0;
         }
+        else{
+            data[back + 1] = elem;
+            back++;
+        }
+        size++;
     }
     
     @SuppressWarnings("unchecked")
     public void resize(){
         T[] temp = (T[])new Object[data.length * 2];
-
-        for(int i = 0; i < data.length; i++){
-            temp[i] = data[(front + i)% data.length];
+        if(back < front){
+        int count = 0;
+        for(int i = front; i < data.length; i++){
+            temp[count] = data[i];
+            count++;
         }
-        front = 0;
-        back = data.length -1;
+        for(int i = 0; i <= back; i++){
+            temp[count] = data[i];
+            count++;
+        }
+        
+        }
+        else{
+            for(int i = front; i <= back; i++){
+                temp[i] = data[i];
+            }
+        } 
         data = temp;
+        front = 0;
+        back = size()-1;
+
     }
     
     public T getFirst(){
@@ -88,18 +111,36 @@ public class MyDeque<T>{
     }
     
     public T removeFirst(){
-        T value = getFirst();
+        if(size() == 0){
+            throw new NoSuchElementException();
+        }
+        T value = data[front];
         data[front] = null;
-        front = (front + 1) % data.length;
-        size--;
+        if(front==data.length - 1){
+            front = 0;
+            size--;
+        }
+        else{
+            front++;
+            size--;
+        }
         return value;
     }
     
     public T removeLast(){
-        T value = getLast();
+        if(size() == 0){
+            throw new NoSuchElementException();
+        }
+        T value = data[back];
         data[back] = null;
-        back = (back - 1 + data.length) % data.length;
-        back--;
+        if(back == 0){
+            back = data.length -1;
+            size--;
+        }
+        else{
+            back --;
+            size--;
+        }
         return value;
     }
     
@@ -117,24 +158,20 @@ public class MyDeque<T>{
         }
         System.out.println(test);
     }*/
-public String toString(){
-    String ans = "[";
-    if(front < back){
-      for (int i = front; i <= back; i++){
-        ans += data[i] + " , ";
-      }
+    public String toString(){
+	String ans = "";
+	if (front <= back){
+	    for (int i = front; i <= back; i++){
+		ans += data[i] + " ";
+	    }
+	}
+	else{
+	    for (int i = front; i <= back+ size; i++){
+		ans += data[i%size] + " ";
+	    }
+	}
+	return ans;
     }
-    else{
-      for(int i = front; i < data.length; i++){
-        ans += data[i] + ", ";
-      }
-      for(int i = 0; i <= back; i++){
-        ans += data[i] + ", ";
-      }
-    }
-    ans = ans.substring(0, ans.length() - 2) + "]";
-    return ans;
-  }
       public static void main(String[] args) {
     MyDeque<String> a = new MyDeque<>(), a1 = new MyDeque<>();
     ArrayList<String> b = new ArrayList<>();
@@ -181,6 +218,9 @@ public String toString(){
     else{
       System.out.println("Your deque is bug-free!");
     }
+    //MyDeque<String> a = new MyDeque<>();
+    //a.add("apple");
+    //System.out.println(a);
   }
 }
             
