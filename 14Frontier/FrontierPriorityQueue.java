@@ -1,5 +1,7 @@
+import java.util.*;
+
 public class FrontierPriorityQueue implements Frontier{
-    private MyHeap<Location> locations = new MyHeap<>();
+    private PriorityQueue<Location> locations = new PriorityQueue<>();
     
     public Location next(){
         return locations.remove();

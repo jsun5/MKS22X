@@ -1,5 +1,7 @@
+import java.util.*;
+
 public class FrontierStack implements Frontier{
-    private MyDeque<Location> locations = new MyDeque<>();
+    private LinkedList<Location> locations = new LinkedList<>();
     
     public Location next(){
         return locations.removeFirst();
