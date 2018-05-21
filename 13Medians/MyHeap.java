@@ -17,6 +17,10 @@ public class MyHeap<T extends Comparable<T>>{
         isMax = Max;
     }
     
+    public int size(){
+        return size;
+    }
+    
     public void add(T s){
         if(size() >= heap.length){
             resize();
@@ -38,6 +42,9 @@ public class MyHeap<T extends Comparable<T>>{
     }
     
     public T remove(){
+        if(size() ==0){
+            return null;
+        }
         T ans = heap[0];
         heap[0] = heap[size()-1];
         remover(peek(),0);
@@ -51,13 +58,13 @@ public class MyHeap<T extends Comparable<T>>{
     public void remover(T s, int index){
         int next = index*2;
 
-        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0 && isMax ||
-           next + 2 < size() && s.compareTo(heap[next + 2]) > 0 && !isMax ){
+        if(next + 2 < size() && s.compareTo(heap[next + 2]) < 0 && heap[next+2].compareTo(heap[next + 1]) >= 0 && isMax ||
+           next + 2 < size() && s.compareTo(heap[next + 2]) >= 0 && heap[next+2].compareTo(heap[next + 1]) < 0 && !isMax ){
             pushDownRight(index);
             remover(s, next + 2);
         }
            else if(next + 1 < size() && s.compareTo(heap[next + 1]) < 0 && isMax ||
-                   next + 1 < size() && s.compareTo(heap[next + 1]) > 0 && !isMax){
+                   next + 1 < size() && s.compareTo(heap[next + 1]) >= 0 && !isMax){
             pushDownLeft(index);
             remover(s, next + 1);
         
@@ -111,10 +118,6 @@ public class MyHeap<T extends Comparable<T>>{
     
     public T peek(){
         return heap[0];
-    }
-    
-    public int size(){
-        return size;
     }
     
     public String toString(){
