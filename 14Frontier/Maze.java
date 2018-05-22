@@ -7,6 +7,7 @@ public class Maze{
   private static final String SHOW_CURSOR =  "\033[?25h";
   Location start,end;
   private char[][]maze;
+  private int[][]directions = {{1,0}, {0,-1}, {-1,0}, {0,1}};
 
   /*
   YOU MUST COMPLETE THIS METHOD!!!
@@ -34,7 +35,6 @@ public class Maze{
   
   public Location[] getNeighbors(Location L, boolean isAStar){
         Location[] list = new Location[4];
-        int[][]directions = {{1,0}, {0,-1}, {-1,0}, {0,1}};
         for(int i = 0; i < 4; i++){
             for(int[]dir : directions){
                 int x = L.getX() + dir[0];
@@ -42,9 +42,9 @@ public class Maze{
                 if(x >= 0 && x <= maze.length-1 && y >= 0 && y <= maze[0].length-1 &&(maze[x][y] == ' ' ||maze[x][y] == 'E')) {
                     int priority =  Math.abs(x - end.getX()) + Math.abs(y - end.getY());
                     if(isAStar){
-                        priority += L.getDistance();
+                        priority += L.getPriority();
                     }
-                    list[i] = new Location(L.getX()+dir[0], L.getY()+dir[1], L, priority, priority); //poss issue
+                    list[i] = new Location(x,y, L, priority, L.getPriority() + 1); //poss issue
                 }
             }
 
@@ -122,8 +122,8 @@ public class Maze{
     The start/end Locations may need more information later when we add
     other kinds of frontiers!
     */
-    end = new Location(endr,endc,null);
-    start = new Location(startr,startc,null);
+    end = new Location(endr,endc,null,0,0);
+    start = new Location(startr,startc,null,0,0);
   }
 
   public String toStringColor(){
