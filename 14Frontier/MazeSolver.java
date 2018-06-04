@@ -56,7 +56,7 @@ public class MazeSolver{
                 }                
             }
         }
-        System.out.println(maze);
+       // System.out.println(maze);
         return false;
     }
     //initialize your frontier
@@ -76,10 +76,12 @@ public class MazeSolver{
   }
   
   public static void main(String[] args){
-	    MazeSolver m = new MazeSolver("data1.dat");
-        System.out.println(m.maze);
-	    System.out.println(m.solve(3));
-	    System.out.println(m);
+	    MazeSolver m = new MazeSolver("data2.dat");
+        //m.maze;
+	    System.out.println(m.solve(0));
+		System.out.println(m.solve(2));
+		System.out.println(m.solve(3));
+	    //System.out.println(m);
 
 	
     }
