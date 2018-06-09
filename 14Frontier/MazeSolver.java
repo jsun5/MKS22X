@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 //Huge thanks to Damian for filling me in on notes for the days I was gone and helping me understand the lab!!
 
 public class MazeSolver{
@@ -32,7 +33,9 @@ public class MazeSolver{
             frontier = new FrontierPriorityQueue();
             setAStar(true);
         }
+		 Location e = maze.getEnd();
         frontier.add(maze.getStart());
+		
         while (frontier.hasNext()){
             Location next = frontier.next();
         //    System.out.println(maze.toStringColor(15));
@@ -43,7 +46,7 @@ public class MazeSolver{
             for(Location L : valid) {
                 
                 if(L != null){
-                    if(L.equals(maze.getEnd())){
+                    if(L.equals(e)){
                         while(!next.equals(maze.getStart())){
                             maze.set(next.getX(), next.getY(), '@');
                             next = next.getPrev();
@@ -76,6 +79,15 @@ public class MazeSolver{
   }
   
   public static void main(String[] args){
+    MazeSolver test = new MazeSolver("data7.dat");
+    System.out.println(test.maze);
+    System.out.println(test.solve(3));
+	System.out.println(test.maze);
+
+    }
+
+ /* 
+  public static void main(String[] args){
 	    MazeSolver m = new MazeSolver("data2.dat");
         //m.maze;
 	    System.out.println(m.solve(0));
@@ -84,5 +96,5 @@ public class MazeSolver{
 	    //System.out.println(m);
 
 	
-    }
+    }*/
 }

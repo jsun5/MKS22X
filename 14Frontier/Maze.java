@@ -7,7 +7,7 @@ public class Maze{
   private static final String SHOW_CURSOR =  "\033[?25h";
   Location start,end;
   private char[][]maze;
-  private int[][]directions = {{1,0}, {0,-1}, {-1,0}, {0,1}};
+  private int[][]directions = {{1,0}, {0,1}, {-1,0}, {0,-1}};
 
   /*
   YOU MUST COMPLETE THIS METHOD!!!
@@ -35,21 +35,22 @@ public class Maze{
   
   public Location[] getNeighbors(Location L, boolean isAStar){
         Location[] list = new Location[4];
-        for(int i = 0; i < 4; i++){
+		int counter  = 0;
             for(int[]dir : directions){
                 int x = L.getX() + dir[0];
                 int y = L.getY() + dir[1];
-                if(x >= 0 && x <= maze.length-1 && y >= 0 && y <= maze[0].length-1 &&(maze[x][y] == ' ' ||maze[x][y] == 'E')) {
+                if(x >= 0 && x < maze.length && y >= 0 && y < maze[0].length &&(maze[x][y] == ' ' ||maze[x][y] == 'E')) {
                     int priority =  Math.abs(x - end.getX()) + Math.abs(y - end.getY());
                     if(isAStar){
                         priority += L.getPriority();
                     }
-                    list[i] = new Location(x,y, L, priority, L.getPriority() + 1); //poss issue
+                    list[counter] = new Location(L.getX()+dir[0],L.getY()+dir[1], L, priority, L.getDist() + 1); //poss issue
                 }
+				counter++;
             }
-
-        }	return list;
+        	return list;
   }
+  
   public Location getStart(){
     return start;
   }
